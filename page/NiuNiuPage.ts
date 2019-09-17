@@ -1,9 +1,9 @@
 /**
 * 牛牛
 */
-module gameniuniu.page {
+module gamerniuniu.page {
 	export class NiuNiuPage extends game.gui.base.Page {
-		private _viewUI: ui.nqp.game_ui.niuniu.QiangZhuangNN_HUDUI;
+		private _viewUI: ui.nqp.game_ui.rniuniu.QiangZhuangNN_HUDUI;
 		private _difenTmep: any = [1, 10, 50, 100];
 		private _leastTmep: any = [20, 200, 500, 1000];
 		private _difenClipList: ClipUtil[] = [];
@@ -76,7 +76,7 @@ module gameniuniu.page {
 			this._viewUI.btn_gaoji.on(LEvent.CLICK, this, this.onBtnClickWithTween);
 			this._viewUI.btn_join.on(LEvent.CLICK, this, this.onBtnClickWithTween);
 
-			(this._viewUI.view as TongyongHudNqpPage).onOpen(this._game, NiuniuPageDef.GAME_NAME, this._isRoomcardType);
+			(this._viewUI.view as TongyongHudNqpPage).onOpen(this._game, RniuniuPageDef.GAME_NAME, this._isRoomcardType);
 			this._game.playMusic(Path_game_niuniu.music_niuniu + "nn_bgm.mp3");
 
 			for (let index = 0; index < this._viewUI.box_right.numChildren; index++) {
@@ -110,7 +110,7 @@ module gameniuniu.page {
 						this.showTipsBox(this._leastTmep[0]);
 						return;
 					}
-					this._game.sceneObjectMgr.intoStory(NiuniuPageDef.GAME_NAME, Web_operation_fields.GAME_ROOM_CONFIG_QIANGZHUANG_NIUNIU_1.toString());
+					this._game.sceneObjectMgr.intoStory(RniuniuPageDef.GAME_NAME, Web_operation_fields.GAME_ROOM_CONFIG_QIANGZHUANG_NIUNIU_1.toString());
 
 					break;
 				case this._viewUI.btn_chuji:
@@ -118,29 +118,29 @@ module gameniuniu.page {
 						this.showTipsBox(this._leastTmep[1]);
 						return;
 					}
-					this._game.sceneObjectMgr.intoStory(NiuniuPageDef.GAME_NAME, Web_operation_fields.GAME_ROOM_CONFIG_QIANGZHUANG_NIUNIU_2.toString());//Web_operation_fields.game_room_config_table[7]
+					this._game.sceneObjectMgr.intoStory(RniuniuPageDef.GAME_NAME, Web_operation_fields.GAME_ROOM_CONFIG_QIANGZHUANG_NIUNIU_2.toString());//Web_operation_fields.game_room_config_table[7]
 					break;
 				case this._viewUI.btn_zhongji:
 					if (this._player.playerInfo.money < this._leastTmep[2]) {
 						this.showTipsBox(this._leastTmep[2]);
 						return;
 					}
-					this._game.sceneObjectMgr.intoStory(NiuniuPageDef.GAME_NAME, Web_operation_fields.GAME_ROOM_CONFIG_QIANGZHUANG_NIUNIU_3.toString());
+					this._game.sceneObjectMgr.intoStory(RniuniuPageDef.GAME_NAME, Web_operation_fields.GAME_ROOM_CONFIG_QIANGZHUANG_NIUNIU_3.toString());
 					break;
 				case this._viewUI.btn_gaoji:
 					if (this._player.playerInfo.money < this._leastTmep[3]) {
 						this.showTipsBox(this._leastTmep[3]);
 						return;
 					}
-					this._game.sceneObjectMgr.intoStory(NiuniuPageDef.GAME_NAME, Web_operation_fields.GAME_ROOM_CONFIG_QIANGZHUANG_NIUNIU_4.toString());
+					this._game.sceneObjectMgr.intoStory(RniuniuPageDef.GAME_NAME, Web_operation_fields.GAME_ROOM_CONFIG_QIANGZHUANG_NIUNIU_4.toString());
 					break;
 				case this._viewUI.btn_join:
-					let maplv = TongyongUtil.getJoinMapLv(NiuniuPageDef.GAME_NAME, this._player.playerInfo.money);
+					let maplv = TongyongUtil.getJoinMapLv(RniuniuPageDef.GAME_NAME, this._player.playerInfo.money);
 					if (!maplv) {
 						this.showTipsBox(this._leastTmep[0]);
 						return;
 					}
-					this._game.sceneObjectMgr.intoStory(NiuniuPageDef.GAME_NAME, maplv.toString());
+					this._game.sceneObjectMgr.intoStory(RniuniuPageDef.GAME_NAME, maplv.toString());
 					break;
 				default:
 					break;

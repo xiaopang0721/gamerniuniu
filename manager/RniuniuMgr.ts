@@ -1,7 +1,7 @@
 /**
 * name 
 */
-module gameniuniu.manager {
+module gamerniuniu.manager {
 	const enum CARD_TYPE {
 		NOT_NIU = 0, //没牛
 		NIU_1 = 1, //牛一
@@ -27,7 +27,7 @@ module gameniuniu.manager {
 		RATE_5 = 5, //五花牛，炸弹   5倍
 		RATE_6 = 6, //五小牛		  6倍
 	}
-	export class NiuMgr extends gamecomponent.managers.PlayingCardMgrBase<NiuData>{
+	export class RniuniuMgr extends gamecomponent.managers.PlayingCardMgrBase<NiuData>{
 		static readonly MAPINFO_OFFLINE: string = "NiuMgr.MAPINFO_OFFLINE";//假精灵
 		static readonly DEAL_OVER: string = "NiuMgr.DEAL_OVER";//发牌结束
 		static readonly WXSHARE_TITLE: string = "抢庄牛牛]房号:{0}";	// 分享标题
@@ -54,7 +54,7 @@ module gameniuniu.manager {
 
 		set offlineUnit(v) {
 			this._offlineUnit = v;
-			this.event(NiuMgr.MAPINFO_OFFLINE)
+			this.event(RniuniuMgr.MAPINFO_OFFLINE)
 		}
 
 		get isReconnect() {
@@ -403,7 +403,7 @@ module gameniuniu.manager {
 						card.fapai();
 						counter++;
 						if (counter >= this._cards.length) {
-							this.event(NiuMgr.DEAL_OVER);
+							this.event(RniuniuMgr.DEAL_OVER);
 						}
 					});
 					count++;

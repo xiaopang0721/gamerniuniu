@@ -1,10 +1,9 @@
 ///抢庄牛牛
-import NiuMgr = gameniuniu.manager.NiuMgr;
-import NiuData = gameniuniu.data.NiuData
-import NiuniuMapInfo = gameniuniu.data.NiuniuMapInfo;
-import NiuniuPageDef = gameniuniu.page.NiuniuPageDef;
-import NiuniuStory = gameniuniu.story.NiuniuStory;
-import NiuniuCardRoomStory = gameniuniu.story.NiuniuCardRoomStory;
+import RniuniuMgr = gamerniuniu.manager.RniuniuMgr;
+import RniuniuData = gamerniuniu.data.RniuniuData
+import RniuniuMapInfo = gamerniuniu.data.RniuniuMapInfo;
+import RniuniuPageDef = gamerniuniu.page.RniuniuPageDef;
+import RniuniuCardRoomStory = gamerniuniu.story.RniuniuCardRoomStory;
 //
-import Path_game_niuniu = gameniuniu.data.Path;
-import NiuniuClip = gameniuniu.ClipUtil;
+import Path_game_rniuniu = gamerniuniu.data.Path;
+import RniuniuClip = gamerniuniu.ClipUtil;

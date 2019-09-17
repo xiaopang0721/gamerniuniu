@@ -1,7 +1,7 @@
 /**
 * name 牛牛剧情
 */
-module gameniuniu.story {
+module gamerniuniu.story {
 	const enum MAP_STATUS {
         PLAY_STATUS_GAME_NONE = 0, // 初始化
         PLAY_STATUS_CARDROOM_CREATED = 1, //房间创建后
@@ -18,7 +18,7 @@ module gameniuniu.story {
         PLAY_STATUS_SETTLE_INFO = 12, // 显示结算信息
         PLAY_STATUS_SHOW_GAME = 13, // 本局展示阶段
     }
-	export class NiuniuCardRoomStory extends gamecomponent.story.StoryRoomCardBase {
+	export class RniuniuCardRoomStory extends gamecomponent.story.StoryRoomCardBase {
 		private _niuMgr: NiuMgr;
 		private _isFaPai: number = 0;
 		private _bankerIndex: number;

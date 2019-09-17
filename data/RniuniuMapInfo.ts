@@ -1,8 +1,8 @@
 /**
 * name 
 */
-module gameniuniu.data {
-	export class NiuniuMapInfo extends gamecomponent.object.MapInfoT<NiuData> {
+module gamerniuniu.data {
+	export class RniuniuMapInfo extends gamecomponent.object.MapInfoT<RniuniuData> {
 		//地图状态变更
 		static EVENT_STATUS_CHECK: string = "NiuniuMapInfo.EVENT_STATUS_CHECK";
 		//战斗体更新
@@ -15,7 +15,7 @@ module gameniuniu.data {
 		static EVENT_COUNT_DOWN: string = "NiuniuMapInfo.EVENT_COUNT_DOWN";
 
 		constructor(v: SceneObjectMgr) {
-			super(v, () => { return new NiuData() });
+			super(v, () => { return new RniuniuData() });
 
 		}
 

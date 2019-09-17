@@ -1,7 +1,7 @@
 /**
 * name 
 */
-module gameniuniu.page {
+module gamerniuniu.page {
 	const enum TYEP_INDEX {
 		TYPE_WANFA_JIESHAO = 0,
 		TYPE_CARD_LEIXING = 1,
@@ -9,7 +9,7 @@ module gameniuniu.page {
 		TYPE_CARD_BEISHU = 3,
 	}
 	export class NiuNiuRulePage extends game.gui.base.Page {
-		private _viewUI: ui.nqp.game_ui.niuniu.QiangZhuangNN_GuiZeUI;
+		private _viewUI: ui.nqp.game_ui.rniuniu.QiangZhuangNN_GuiZeUI;
 
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
 			super(v, onOpenFunc, onCloseFunc);

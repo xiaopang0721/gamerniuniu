@@ -1,9 +1,9 @@
 /**
 * name 
 */
-module gameniuniu.page{
+module gamerniuniu.page{
 	export class NiuNiuBeginPage extends game.gui.base.Page {
-		private _viewUI: ui.nqp.game_ui.niuniu.GoUI;
+		private _viewUI: ui.nqp.game_ui.rniuniu.GoUI;
 		
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
 			super(v, onOpenFunc, onCloseFunc);

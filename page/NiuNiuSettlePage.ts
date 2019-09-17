@@ -1,11 +1,11 @@
 /**
 * name 
 */
-module gameniuniu.page {
+module gamerniuniu.page {
 	export class NiuNiuSettlePage extends game.gui.base.Page {
-		private _viewUI: ui.nqp.game_ui.niuniu.JieSuanUI;
+		private _viewUI: ui.nqp.game_ui.rniuniu.JieSuanUI;
 		private _niuMgr: NiuMgr;
-		private _niuStory: NiuniuCardRoomStory;
+		private _niuStory: RniuniuCardRoomStory;
 
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
 			super(v, onOpenFunc, onCloseFunc);
@@ -20,7 +20,7 @@ module gameniuniu.page {
 		protected init(): void {
 			this._viewUI = this.createView('game_ui.niuniu.JieSuanUI');
 			this.addChild(this._viewUI);
-			this._niuStory = this._game.sceneObjectMgr.story as NiuniuCardRoomStory;
+			this._niuStory = this._game.sceneObjectMgr.story as RniuniuCardRoomStory;
 			this._niuMgr = this._niuStory.niuMgr;
 		}
 
@@ -47,7 +47,7 @@ module gameniuniu.page {
 		protected onBtnTweenEnd(e: LEvent, target: any) {
 			switch (target) {
 				case this._viewUI.btn_create_room:
-					this._game.uiRoot.general.open(NiuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM);
+					this._game.uiRoot.general.open(RniuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM);
 					this.close();
 					break;
 				case this._viewUI.btn_back_hud:

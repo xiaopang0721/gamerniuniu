@@ -1,8 +1,8 @@
 /**
 * name 
 */
-module gameniuniu.page {
-	export class NiuniuPageDef extends game.gui.page.PageDef {
+module gamerniuniu.page {
+	export class RniuniuPageDef extends game.gui.page.PageDef {
 		static GAME_NAME: string;
 		//牛牛界面
 		static PAGE_NIUNIU: string = "1";
@@ -29,17 +29,17 @@ module gameniuniu.page {
 		static myinit(str: string) {
 			super.myinit(str);
 			NiuniuClip.init();
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU] = NiuNiuPage;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_MAP] = NiuNiuMapPage;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_BEGIN] = NiuNiuBeginPage;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_WIN] = NiuNiuWinPage;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_LOSE] = NiuNiuLosePage;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_RULE] = NiuNiuRulePage;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_TONGSHA] = NiuNiuTongShaPage;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_TONGPEI] = NiuNiuTongPeiPage;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM] = NiuNiuCreateCardRoom;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_JOIN_CARDROOM] = NiuNiuJoinCardRoom;
-			PageDef._pageClassMap[NiuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE] = NiuNiuSettlePage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU] = NiuNiuPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_MAP] = NiuNiuCardMapPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_BEGIN] = NiuNiuBeginPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_WIN] = NiuNiuWinPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_LOSE] = NiuNiuLosePage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_RULE] = NiuNiuRulePage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_TONGSHA] = NiuNiuTongShaPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_TONGPEI] = NiuNiuTongPeiPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM] = NiuNiuCreateCardRoom;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_JOIN_CARDROOM] = NiuNiuJoinCardRoom;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE] = NiuNiuSettlePage;
 
 
 			this["__needLoadAsset"] = [

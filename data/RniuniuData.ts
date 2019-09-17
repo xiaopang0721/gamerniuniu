@@ -1,8 +1,8 @@
 /**
 * name 
 */
-module gameniuniu.data {
-	export class NiuData extends gamecomponent.object.PlayingPoker {
+module gamerniuniu.data {
+	export class RniuniuData extends gamecomponent.object.PlayingPoker {
 		private _card_count: number = 0;
 		private _isFan: boolean = false;
 		private _ownerIdx: number;

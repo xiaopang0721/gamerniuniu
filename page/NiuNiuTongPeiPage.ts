@@ -1,7 +1,7 @@
 /**
 * name 
 */
-module gameniuniu.page{
+module gamerniuniu.page{
 	export class NiuNiuTongPeiPage extends game.gui.base.Page {
 		private _viewUI: ui.nqp.game_ui.tongyong.effect.TongShaUI;
 

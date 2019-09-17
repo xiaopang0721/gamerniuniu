@@ -1,7 +1,7 @@
 /**
 * 牛牛
 */
-module gameniuniu.page {
+module gamerniuniu.page {
     const enum MAP_STATUS {
         PLAY_STATUS_GAME_NONE = 0, // 初始化
         PLAY_STATUS_CARDROOM_CREATED = 1, //房间创建后
@@ -48,7 +48,7 @@ module gameniuniu.page {
     };
     const CARD_TYPE = ["没牛", "牛一", "牛二", "牛三", "牛四", "牛五", "牛六", "牛七", "牛八", "牛九", "牛牛", "四花牛", "五花牛", "炸弹", "五小牛"];    //牌型
     export class NiuNiuCardMapPage extends game.gui.base.Page {
-        private _viewUI: ui.nqp.game_ui.niuniu.QiangZhuangNNUI;
+        private _viewUI: ui.nqp.game_ui.rniuniu.QiangZhuangNNUI;
         private _kuangView: ui.nqp.game_ui.tongyong.effect.SuiJiUI;//随机庄家框特效
         private _niuMgr: NiuMgr;//牛牛管理器
         private _niuStory: any;//牛牛剧情类
@@ -1108,7 +1108,7 @@ module gameniuniu.page {
                     break;
                 case MAP_STATUS.PLAY_STATUS_GAME_SHUFFLE:// 洗牌阶段
                     if (this.isCardRoomType) {
-                        this._pageHandle.pushClose({ id: NiuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE, parent: this._game.uiRoot.HUD });
+                        this._pageHandle.pushClose({ id: RniuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE, parent: this._game.uiRoot.HUD });
                         this.clearClips();
                         this.resetUI();
                         this.resetData();
@@ -1125,12 +1125,12 @@ module gameniuniu.page {
                     this._isPlayXiPai = true;
                     break;
                 case MAP_STATUS.PLAY_STATUS_GAME_START:// 游戏开始
-                    this._pageHandle.pushOpen({ id: NiuniuPageDef.PAGE_NIUNIU_BEGIN, parent: this._game.uiRoot.HUD });
+                    this._pageHandle.pushOpen({ id: RniuniuPageDef.PAGE_NIUNIU_BEGIN, parent: this._game.uiRoot.HUD });
                     this._game.playSound(Path_game_niuniu.music_niuniu + "kaishi.mp3", false);
                     this._viewUI.box_tips.visible = false;
                     break;
                 case MAP_STATUS.PLAY_STATUS_GET_BANKER:// 开始抢庄
-                    this._pageHandle.pushClose({ id: NiuniuPageDef.PAGE_NIUNIU_BEGIN, parent: this._game.uiRoot.HUD });
+                    this._pageHandle.pushClose({ id: RniuniuPageDef.PAGE_NIUNIU_BEGIN, parent: this._game.uiRoot.HUD });
                     this._viewUI.txt_status.text = "开始抢庄";
                     break;
                 case MAP_STATUS.PLAY_STATUS_SET_BANKER:// 定庄阶段
@@ -1185,16 +1185,16 @@ module gameniuniu.page {
                     Laya.timer.once(2000, this, () => {
                         if (this._bankerLoseInfo.length == 2) {//庄家通杀
                             this._game.playSound(Path_game_niuniu.music_niuniu + "zjtongchi.mp3", false);
-                            this._game.uiRoot.HUD.open(NiuniuPageDef.PAGE_NIUNIU_TONGSHA);
+                            this._game.uiRoot.HUD.open(RniuniuPageDef.PAGE_NIUNIU_TONGSHA);
                         }
                         else if (this._mainPlayerBenefit > 0) {
                             let rand = MathU.randomRange(1, 3);
                             this._game.playSound(StringU.substitute(PathGameTongyong.music_tongyong + "win{0}.mp3", rand), true);
-                            this._game.uiRoot.HUD.open(NiuniuPageDef.PAGE_NIUNIU_WIN);
+                            this._game.uiRoot.HUD.open(RniuniuPageDef.PAGE_NIUNIU_WIN);
                         } else {
                             let rand = MathU.randomRange(1, 4);
                             this._game.playSound(StringU.substitute(PathGameTongyong.music_tongyong + "lose{0}.mp3", rand), true);
-                            this._game.uiRoot.HUD.open(NiuniuPageDef.PAGE_NIUNIU_LOSE);
+                            this._game.uiRoot.HUD.open(RniuniuPageDef.PAGE_NIUNIU_LOSE);
                         }
                     });
 
@@ -1207,7 +1207,7 @@ module gameniuniu.page {
                     if (this.isCardRoomType && this._niuMapInfo.GetRound() == this._niuMapInfo.GetCardRoomGameNumber()) {
                         this.openCardSettlePage();
                     }
-                    this._pageHandle.pushClose({ id: NiuniuPageDef.PAGE_NIUNIU_TONGSHA, parent: this._game.uiRoot.HUD });
+                    this._pageHandle.pushClose({ id: RniuniuPageDef.PAGE_NIUNIU_TONGSHA, parent: this._game.uiRoot.HUD });
                     if (this._game.sceneObjectMgr.mainPlayer.playerInfo.money < this._room_config[1]) {
                         TongyongPageDef.ins.alertRecharge(StringU.substitute("老板，您的金币少于{0}哦~\n补充点金币去大杀四方吧~", this._room_config[1]), () => {
                             this._game.uiRoot.general.open(DatingPageDef.PAGE_CHONGZHI);
@@ -1277,7 +1277,7 @@ module gameniuniu.page {
             infoTemps.push(this._niuMapInfo.GetCardRoomGameNumber());
             infoTemps.push(this._niuMapInfo.GetCountDown());
             infoTemps.push(temps);
-            this._pageHandle.pushOpen({ id: NiuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE, dataSource: infoTemps, parent: this._game.uiRoot.HUD });
+            this._pageHandle.pushOpen({ id: RniuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE, dataSource: infoTemps, parent: this._game.uiRoot.HUD });
         }
 
         //按钮缓动回调
@@ -1287,12 +1287,12 @@ module gameniuniu.page {
                     this.showMenu(true);
                     break;
                 case this._viewUI.btn_cardType://牌型
-                    this._game.uiRoot.general.open(NiuniuPageDef.PAGE_NIUNIU_RULE, (page: NiuNiuRulePage) => {
+                    this._game.uiRoot.general.open(RniuniuPageDef.PAGE_NIUNIU_RULE, (page: NiuNiuRulePage) => {
                         page.dataSource = 1;
                     });
                     break;
                 case this._viewUI.btn_rule://规则
-                    this._game.uiRoot.general.open(NiuniuPageDef.PAGE_NIUNIU_RULE);
+                    this._game.uiRoot.general.open(RniuniuPageDef.PAGE_NIUNIU_RULE);
                     break;
                 case this._viewUI.btn_chongzhi://充值
                     this._game.uiRoot.general.open(DatingPageDef.PAGE_CHONGZHI);
@@ -1338,7 +1338,7 @@ module gameniuniu.page {
                 case this._viewUI.btn_zhanji://战绩
                     this._game.uiRoot.general.open(TongyongPageDef.PAGE_TONGYONG_RECORD, (page) => {
                         page.dataSource = {
-                            gameid: NiuniuPageDef.GAME_NAME,
+                            gameid: RniuniuPageDef.GAME_NAME,
                             isCardRoomType: this._niuStory instanceof gamecomponent.story.StoryRoomCardBase,
                         };
                     });
@@ -1440,7 +1440,7 @@ module gameniuniu.page {
                     // 微信邀请玩家参与房卡游戏
                     logd("btn_invite:", this._niuMapInfo.GetCardRoomId());
                     if (this.isCardRoomType && this._niuMapInfo.GetCardRoomId()) {
-                        this._game.network.call_get_roomcard_share(NiuniuPageDef.GAME_NAME);
+                        this._game.network.call_get_roomcard_share(RniuniuPageDef.GAME_NAME);
                     }
                     break;
                 case this._viewUI.view_card.btn_dismiss://房卡解散

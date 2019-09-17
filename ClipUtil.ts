@@ -1,7 +1,7 @@
 /**
 * 位图切片生成工具
 */
-module gameniuniu {
+module gamerniuniu {
     export class ClipUtil extends Laya.Box {
         //货币 金色
         public static MONEY_FONT2: any;
