@@ -8,7 +8,7 @@ module gamerniuniu.page {
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
 			super(v, onOpenFunc, onCloseFunc);
 			this._asset = [
-				Path_game_niuniu.atlas_game_ui + "niuniu.atlas",
+				Path_game_rniuniu.atlas_game_ui + "niuniu.atlas",
 			];
 		}
 

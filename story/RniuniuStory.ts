@@ -18,11 +18,11 @@ module gamerniuniu.story {
         PLAY_STATUS_SETTLE_INFO = 12, // 显示结算信息
         PLAY_STATUS_SHOW_GAME = 13, // 本局展示阶段
     }
-	export class RniuniuCardRoomStory extends gamecomponent.story.StoryRoomCardBase {
-		private _niuMgr: NiuMgr;
+	export class RniuniuStory extends gamecomponent.story.StoryRoomCardBase {
+		private _niuMgr: RniuniuMgr;
 		private _isFaPai: number = 0;
 		private _bankerIndex: number;
-		private _niuMapInfo: NiuniuMapInfo;
+		private _niuMapInfo: RniuniuMapInfo;
 		private _curStatus: number;
 
 		constructor(v: Game, mapid: string, maplv: number, dataSource: any) {
@@ -48,17 +48,17 @@ module gamerniuniu.story {
 
 		init() {
 			if (!this._niuMgr) {
-				this._niuMgr = new NiuMgr(this._game);
+				this._niuMgr = new RniuniuMgr(this._game);
 			}
 			this._game.sceneObjectMgr.on(SceneObjectMgr.EVENT_LOAD_MAP, this, this.onIntoNewMap);
 			this._game.sceneObjectMgr.on(SceneObjectMgr.EVENT_MAPINFO_CHANGE, this, this.onMapInfoChange);
 			this._game.sceneObjectMgr.on(SceneObjectMgr.EVENT_MAIN_UNIT_CHANGE, this, this.onUpdateCardInfo);
-			this._game.sceneObjectMgr.on(NiuniuMapInfo.EVENT_BATTLE_CHECK, this, this.onUpdateBattle);
-			this._game.sceneObjectMgr.on(NiuniuMapInfo.EVENT_STATUS_CHECK, this, this.onUpdateState);
+			this._game.sceneObjectMgr.on(RniuniuMapInfo.EVENT_BATTLE_CHECK, this, this.onUpdateBattle);
+			this._game.sceneObjectMgr.on(RniuniuMapInfo.EVENT_STATUS_CHECK, this, this.onUpdateState);
 		}
 
 		private createObj() {
-			let card = this._game.sceneObjectMgr.createOfflineObject(SceneRoot.CARD_MARK, NiuData) as NiuData;
+			let card = this._game.sceneObjectMgr.createOfflineObject(SceneRoot.CARD_MARK, RniuniuData) as RniuniuData;
 			card.pos = new Vector2(965, 220);
 			// let mainUnit: Unit = this._game.sceneObjectMgr.mainUnit;
 			// card.myOwner(u, mainUnit == u, mainUnit.GetIndex());
@@ -70,12 +70,12 @@ module gamerniuniu.story {
 			if (!info) return;
 			this.onMapInfoChange();
 			this._game.uiRoot.closeAll();
-			this._game.uiRoot.HUD.open(NiuniuPageDef.PAGE_NIUNIU_MAP);
+			this._game.uiRoot.HUD.open(RniuniuPageDef.PAGE_NIUNIU_MAP);
 		}
 
 		private onMapInfoChange(): void {
 			let mapinfo = this._game.sceneObjectMgr.mapInfo;
-			this._niuMapInfo = mapinfo as NiuniuMapInfo;
+			this._niuMapInfo = mapinfo as RniuniuMapInfo;
 			if (mapinfo) {
 				this.resetBattleIdx();
 				this.onUpdateState();
@@ -97,7 +97,7 @@ module gamerniuniu.story {
 		}
 
 		private onUpdateState(): void {
-			// let mapinfo: niuniu.data.NiuniuMapInfo = this._game.sceneObjectMgr.mapInfo as niuniu.data.NiuniuMapInfo;
+			// let mapinfo: niuniu.data.RniuniuMapInfo = this._game.sceneObjectMgr.mapInfo as niuniu.data.RniuniuMapInfo;
 			if (!this._niuMapInfo) return;
 			let mapStatus = this._niuMapInfo.GetMapState();
 			if (this._curStatus == mapStatus) return;
@@ -261,8 +261,8 @@ module gamerniuniu.story {
 		}
 
 		clear() {
-			this._game.sceneObjectMgr.off(NiuniuMapInfo.EVENT_BATTLE_CHECK, this, this.onUpdateBattle);
-			this._game.sceneObjectMgr.off(NiuniuMapInfo.EVENT_STATUS_CHECK, this, this.onUpdateState);
+			this._game.sceneObjectMgr.off(RniuniuMapInfo.EVENT_BATTLE_CHECK, this, this.onUpdateBattle);
+			this._game.sceneObjectMgr.off(RniuniuMapInfo.EVENT_STATUS_CHECK, this, this.onUpdateState);
 			this._game.sceneObjectMgr.off(SceneObjectMgr.EVENT_MAIN_UNIT_CHANGE, this, this.onUpdateCardInfo);
 			this._game.sceneObjectMgr.off(SceneObjectMgr.EVENT_LOAD_MAP, this, this.onIntoNewMap);
 			this._game.sceneObjectMgr.off(SceneObjectMgr.EVENT_MAPINFO_CHANGE, this, this.onMapInfoChange);

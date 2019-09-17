@@ -16,7 +16,7 @@ module gamerniuniu.page {
 			this._isNeedBlack = true;
 			this._isClickBlack = true;
 			this._asset = [
-				Path_game_niuniu.atlas_game_ui + "niuniu.atlas",
+				Path_game_rniuniu.atlas_game_ui + "niuniu.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "hud.atlas",
 			];

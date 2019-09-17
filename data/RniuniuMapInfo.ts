@@ -4,15 +4,15 @@
 module gamerniuniu.data {
 	export class RniuniuMapInfo extends gamecomponent.object.MapInfoT<RniuniuData> {
 		//地图状态变更
-		static EVENT_STATUS_CHECK: string = "NiuniuMapInfo.EVENT_STATUS_CHECK";
+		static EVENT_STATUS_CHECK: string = "RniuniuMapInfo.EVENT_STATUS_CHECK";
 		//战斗体更新
-		static EVENT_BATTLE_CHECK: string = "NiuniuMapInfo.EVENT_BATTLE_CHECK";
+		static EVENT_BATTLE_CHECK: string = "RniuniuMapInfo.EVENT_BATTLE_CHECK";
 		//房卡局数更新
-		static EVENT_GAME_ROUND_CHANGE: string = "NiuniuMapInfo.EVENT_GAME_ROUND_CHANGE";
+		static EVENT_GAME_ROUND_CHANGE: string = "RniuniuMapInfo.EVENT_GAME_ROUND_CHANGE";
 		//牌局号
-		static EVENT_GAME_NO: string = "NiuniuMapInfo.EVENT_GAME_NO";
+		static EVENT_GAME_NO: string = "RniuniuMapInfo.EVENT_GAME_NO";
 		//倒计时时间戳更新
-		static EVENT_COUNT_DOWN: string = "NiuniuMapInfo.EVENT_COUNT_DOWN";
+		static EVENT_COUNT_DOWN: string = "RniuniuMapInfo.EVENT_COUNT_DOWN";
 
 		constructor(v: SceneObjectMgr) {
 			super(v, () => { return new RniuniuData() });
@@ -24,20 +24,20 @@ module gamerniuniu.data {
 			super.onUpdate(flags, mask, strmask);
 			let isNew = flags & core.obj.OBJ_OPT_NEW;
 			if (isNew || mask.GetBit(MapField.MAP_INT_MAP_BYTE)) {
-				this._sceneObjectMgr.event(NiuniuMapInfo.EVENT_STATUS_CHECK);
+				this._sceneObjectMgr.event(RniuniuMapInfo.EVENT_STATUS_CHECK);
 			}
 			if (isNew || mask.GetBit(MapField.MAP_INT_BATTLE_INDEX)) {
 				this._battleInfoMgr.OnUpdate();
-				this._sceneObjectMgr.event(NiuniuMapInfo.EVENT_BATTLE_CHECK);
+				this._sceneObjectMgr.event(RniuniuMapInfo.EVENT_BATTLE_CHECK);
 			}
 			if (isNew || mask.GetBit(MapField.MAP_INT_MAP_BYTE1)) {
-				this._sceneObjectMgr.event(NiuniuMapInfo.EVENT_GAME_ROUND_CHANGE);
+				this._sceneObjectMgr.event(RniuniuMapInfo.EVENT_GAME_ROUND_CHANGE);
 			}
 			if (isNew || mask.GetBit(MapField.MAP_INT_COUNT_DOWN)) {
-				this._sceneObjectMgr.event(NiuniuMapInfo.EVENT_COUNT_DOWN);
+				this._sceneObjectMgr.event(RniuniuMapInfo.EVENT_COUNT_DOWN);
 			}
 			if (isNew || strmask.GetBit(MapField.MAP_STR_GAME_NO)) {
-				this._sceneObjectMgr.event(NiuniuMapInfo.EVENT_GAME_NO);
+				this._sceneObjectMgr.event(RniuniuMapInfo.EVENT_GAME_NO);
 			}
 		}
 		//牌型
@@ -71,7 +71,7 @@ module gamerniuniu.data {
 					str = str + "#" + newString;
 				} else if (battleInfo.Type == 3) {
 					let info = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoPlayCard<gamecomponent.object.PlayingPuKeCard>;
-					let newString = name + "：" + "摊牌，牌型是：" + NiuniuMapInfo.cardType[info.CardType - 1];
+					let newString = name + "：" + "摊牌，牌型是：" + RniuniuMapInfo.cardType[info.CardType - 1];
 					str = str + "#" + newString;
 				} else if (battleInfo.Type == 11) {
 					let info = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoSettle;

@@ -27,7 +27,7 @@ module gamerniuniu.manager {
 		RATE_5 = 5, //五花牛，炸弹   5倍
 		RATE_6 = 6, //五小牛		  6倍
 	}
-	export class RniuniuMgr extends gamecomponent.managers.PlayingCardMgrBase<NiuData>{
+	export class RniuniuMgr extends gamecomponent.managers.PlayingCardMgrBase<RniuniuData>{
 		static readonly MAPINFO_OFFLINE: string = "NiuMgr.MAPINFO_OFFLINE";//假精灵
 		static readonly DEAL_OVER: string = "NiuMgr.DEAL_OVER";//发牌结束
 		static readonly WXSHARE_TITLE: string = "抢庄牛牛]房号:{0}";	// 分享标题
@@ -92,7 +92,7 @@ module gamerniuniu.manager {
 		//对牌进行排序
 		SortCards(cards: any[]) {
 			if (!cards) return;
-			cards.sort((a: NiuData, b: NiuData) => {
+			cards.sort((a: RniuniuData, b: RniuniuData) => {
 				return a.Compare(b, true);
 			});
 		}
@@ -223,7 +223,7 @@ module gamerniuniu.manager {
 				let unit = this._game.sceneObjectMgr.getUnitByIdx(posIdx);
 				if (unit) {
 					for (let i = 0; i < max; i++) {//手牌
-						let card = cards[count * max + i] as NiuData;
+						let card = cards[count * max + i] as RniuniuData;
 						if (card) {
 							card.myOwner(posIdx, mainUnit == unit, mainUnit.GetIndex());
 							card.index = i;
@@ -261,7 +261,7 @@ module gamerniuniu.manager {
 							let isNiu = this.checkCardsType(_cards);
 							_cards = this.sortCardsToNiu(_cards);
 							for (let j = 0; j < max; j++) {//手牌
-								let card = cards[count * max + j] as NiuData;
+								let card = cards[count * max + j] as RniuniuData;
 								let _card = _cards[j];
 								if (card) {
 									card.Init(_card.GetVal());
@@ -313,7 +313,7 @@ module gamerniuniu.manager {
 							let isNiu = this.checkCardsType(_cards);
 							_cards = this.sortCardsToNiu(_cards);
 							for (let j = 0; j < max; j++) {//手牌
-								let card = cards[count * max + j] as NiuData;
+								let card = cards[count * max + j] as RniuniuData;
 								let _card = _cards[j];
 								card.Init(_card.GetVal());
 								card.index = j;
@@ -336,7 +336,7 @@ module gamerniuniu.manager {
 			this._isShowOver = true;
 		}
 
-		sortCardsToNiu(cards): Array<NiuData> {
+		sortCardsToNiu(cards): Array<RniuniuData> {
 			let lave = 0; //余数
 			let index1 = 0;
 			let index2 = 0;
@@ -539,7 +539,7 @@ module gamerniuniu.manager {
 		// 清理指定玩家卡牌对象
 		clearCardObject(index: number): void {
 			this._game.sceneObjectMgr.ForEachObject((obj: any) => {
-				if (obj instanceof NiuData) {
+				if (obj instanceof RniuniuData) {
 					if (obj.GetOwnerIdx() == index) {
 						this._game.sceneObjectMgr.clearOfflineObject(obj);
 					}

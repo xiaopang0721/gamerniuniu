@@ -11,22 +11,22 @@ module gamerniuniu.page {
 		private _clipArr: any[] = [ClipUtil.HUD_FONT0, ClipUtil.HUD_FONT1, ClipUtil.HUD_FONT2, ClipUtil.HUD_FONT3];
 		private _player: any;
 		private _playerInfo: any;
-		private _niuMgr: NiuMgr;
+		private _niuMgr: RniuniuMgr;
 		private _isRoomcardType: boolean;
 
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
 			super(v, onOpenFunc, onCloseFunc);
 			this._asset = [
-				Path_game_niuniu.atlas_game_ui + "niuniu.atlas",
+				Path_game_rniuniu.atlas_game_ui + "niuniu.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "touxiang.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "hud.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "dating.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "logo.atlas",
-				Path_game_niuniu.ui_niuniu + "sk/qznn_0.png",
-				Path_game_niuniu.ui_niuniu + "sk/qznn_1.png",
-				Path_game_niuniu.ui_niuniu + "sk/qznn_2.png",
-				Path_game_niuniu.ui_niuniu + "sk/qznn_3.png",
+				Path_game_rniuniu.ui_niuniu + "sk/qznn_0.png",
+				Path_game_rniuniu.ui_niuniu + "sk/qznn_1.png",
+				Path_game_rniuniu.ui_niuniu + "sk/qznn_2.png",
+				Path_game_rniuniu.ui_niuniu + "sk/qznn_3.png",
 			];
 			this._isNeedDuang = false;
 		}
@@ -35,7 +35,7 @@ module gamerniuniu.page {
 		protected init(): void {
 			this._viewUI = this.createView('game_ui.niuniu.QiangZhuangNN_HUDUI', ["game_ui.tongyong.HudUI"]);
 			this.addChild(this._viewUI);
-			this._niuMgr = new NiuMgr(this._game);
+			this._niuMgr = new RniuniuMgr(this._game);
 
 			for (let index = 0; index < this._viewUI.box_right.numChildren; index++) {
 				this._viewUI.box_right._childs[index].visible = false;
@@ -77,7 +77,7 @@ module gamerniuniu.page {
 			this._viewUI.btn_join.on(LEvent.CLICK, this, this.onBtnClickWithTween);
 
 			(this._viewUI.view as TongyongHudNqpPage).onOpen(this._game, RniuniuPageDef.GAME_NAME, this._isRoomcardType);
-			this._game.playMusic(Path_game_niuniu.music_niuniu + "nn_bgm.mp3");
+			this._game.playMusic(Path_game_rniuniu.music_niuniu + "nn_bgm.mp3");
 
 			for (let index = 0; index < this._viewUI.box_right.numChildren; index++) {
 				this._viewUI.box_right._childs[index].visible = true;

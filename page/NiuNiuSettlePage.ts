@@ -4,8 +4,8 @@
 module gamerniuniu.page {
 	export class NiuNiuSettlePage extends game.gui.base.Page {
 		private _viewUI: ui.nqp.game_ui.rniuniu.JieSuanUI;
-		private _niuMgr: NiuMgr;
-		private _niuStory: RniuniuCardRoomStory;
+		private _niuMgr: RniuniuMgr;
+		private _niuStory: RniuniuStory;
 
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
 			super(v, onOpenFunc, onCloseFunc);
@@ -20,7 +20,7 @@ module gamerniuniu.page {
 		protected init(): void {
 			this._viewUI = this.createView('game_ui.niuniu.JieSuanUI');
 			this.addChild(this._viewUI);
-			this._niuStory = this._game.sceneObjectMgr.story as RniuniuCardRoomStory;
+			this._niuStory = this._game.sceneObjectMgr.story as RniuniuStory;
 			this._niuMgr = this._niuStory.niuMgr;
 		}
 
@@ -90,7 +90,7 @@ module gamerniuniu.page {
 		}
 	}
 
-	class ListRecordItem extends ui.nqp.game_ui.niuniu.component.JieSuanCardRenderUI {
+	class ListRecordItem extends ui.nqp.game_ui.rniuniu.component.JieSuanCardRenderUI {
 		private _game: Game;
 		private _data: any;
 		setData(game: Game, data: any) {
