@@ -16,7 +16,7 @@ module gamerniuniu.page {
 			this._isNeedBlack = true;
 			this._isClickBlack = true;
 			this._asset = [
-				Path_game_rniuniu.atlas_game_ui + "niuniu.atlas",
+				Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "hud.atlas",
 			];
@@ -24,7 +24,7 @@ module gamerniuniu.page {
 
 		// 页面初始化函数
 		protected init(): void {
-			this._viewUI = this.createView('game_ui.niuniu.QiangZhuangNN_GuiZeUI');
+			this._viewUI = this.createView('game_ui.rniuniu.QiangZhuangNN_GuiZeUI');
 			this.addChild(this._viewUI);
 
 		}

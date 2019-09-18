@@ -8,13 +8,13 @@ module gamerniuniu.page {
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
 			super(v, onOpenFunc, onCloseFunc);
 			this._asset = [
-				Path_game_rniuniu.atlas_game_ui + "niuniu.atlas",
+				Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
 			];
 		}
 
 		// 页面初始化函数
 		protected init(): void {
-			this._viewUI = this.createView('game_ui.niuniu.JieSuan_1UI');
+			this._viewUI = this.createView('game_ui.rniuniu.JieSuan_1UI');
 			this.addChild(this._viewUI);
 		}
 

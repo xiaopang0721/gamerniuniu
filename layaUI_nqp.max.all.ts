@@ -409,27 +409,14 @@ module ui.nqp.game_ui.rniuniu {
 module ui.nqp.game_ui.rniuniu {
     export class QiangZhuangNN_HUDUI extends View {
 		public view:ui.nqp.game_ui.tongyong.HudUI;
-		public box_normal:Laya.Box;
-		public box_right:Laya.Box;
-		public btn_xinshou:Laya.Box;
-		public txt_least0:Laya.Clip;
-		public txt_difen0:Laya.Clip;
-		public btn_chuji:Laya.Box;
-		public txt_difen1:Laya.Clip;
-		public txt_least1:Laya.Clip;
-		public btn_zhongji:Laya.Box;
-		public txt_difen2:Laya.Clip;
-		public txt_least2:Laya.Clip;
-		public btn_gaoji:Laya.Box;
-		public txt_least3:Laya.Clip;
-		public txt_difen3:Laya.Clip;
-		public btn_join:Laya.Button;
+		public box_roomcard:Laya.Box;
+		public img_room_create:Laya.Image;
+		public img_room_join:Laya.Image;
 
-        public static  uiView:any ={"type":"View","props":{"width":1280,"height":720},"child":[{"type":"Image","props":{"top":-1,"skin":"rniuniu_ui/game_ui/rniuniu/tu_zjh.png","right":-1,"left":-1,"bottom":-1,"anchorY":0.5,"anchorX":0.5}},{"type":"Hud","props":{"var":"view","top":-1,"right":-1,"left":-1,"bottom":-1,"runtime":"ui.nqp.game_ui.tongyong.HudUI"}},{"type":"Box","props":{"width":1280,"var":"box_normal","top":-1,"mouseThrough":true,"centerX":0,"bottom":-1,"anchorY":0.5,"anchorX":0.5},"child":[{"type":"Box","props":{"width":1281,"var":"box_right","height":465,"centerY":20,"centerX":0,"anchorY":0.5,"anchorX":0.5},"child":[{"type":"Box","props":{"y":71,"width":279,"var":"btn_xinshou","right":980,"height":330},"child":[{"type":"SkeletonPlayer","props":{"y":165,"x":140,"url":"rniuniu_ui/game_ui/rniuniu/sk/qznn_0.sk"}},{"type":"Clip","props":{"y":298,"x":140,"width":15,"var":"txt_least0","skin":"tongyong_ui/game_ui/tongyong/dating/clip_dizhu3.png","height":18,"clipX":10}},{"type":"Clip","props":{"y":263,"x":141,"var":"txt_difen0","skin":"tongyong_ui/game_ui/tongyong/dating/clip_dizhu3.png","clipX":10}},{"type":"Image","props":{"y":259,"x":84,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_df1.png"}},{"type":"Image","props":{"y":295,"x":92,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_zr1.png"}}]},{"type":"Box","props":{"y":75,"width":280,"var":"btn_chuji","right":660,"height":326},"child":[{"type":"SkeletonPlayer","props":{"y":162,"x":139,"url":"rniuniu_ui/game_ui/rniuniu/sk/qznn_1.sk"}},{"type":"Clip","props":{"y":259,"x":141,"var":"txt_difen1","skin":"tongyong_ui/game_ui/tongyong/dating/clip_dizhu2.png","clipX":10}},{"type":"Clip","props":{"y":295,"x":138,"width":15,"var":"txt_least1","skin":"tongyong_ui/game_ui/tongyong/dating/clip_dizhu2.png","height":18,"clipX":10}},{"type":"Image","props":{"y":256,"x":81,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_df2.png"}},{"type":"Image","props":{"y":291,"x":89,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_zr2.png"}}]},{"type":"Box","props":{"y":52,"width":280,"var":"btn_zhongji","right":347,"height":349},"child":[{"type":"SkeletonPlayer","props":{"y":185,"x":161,"url":"rniuniu_ui/game_ui/rniuniu/sk/qznn_2.sk"}},{"type":"Clip","props":{"y":280,"x":143,"var":"txt_difen2","skin":"tongyong_ui/game_ui/tongyong/dating/clip_dizhu1.png","clipX":10}},{"type":"Clip","props":{"y":315,"x":138,"width":15,"var":"txt_least2","skin":"tongyong_ui/game_ui/tongyong/dating/clip_dizhu1.png","height":18,"clipX":10}},{"type":"Image","props":{"y":277,"x":83,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_df3.png"}},{"type":"Image","props":{"y":312,"x":91,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_zr3.png"}}]},{"type":"Box","props":{"y":60,"width":300,"var":"btn_gaoji","right":20,"height":341},"child":[{"type":"SkeletonPlayer","props":{"y":177,"x":150,"url":"rniuniu_ui/game_ui/rniuniu/sk/qznn_3.sk"}},{"type":"Clip","props":{"y":307,"x":151,"width":15,"var":"txt_least3","skin":"tongyong_ui/game_ui/tongyong/dating/clip_dizhu3.png","height":18,"clipX":10}},{"type":"Clip","props":{"y":273,"x":154,"var":"txt_difen3","skin":"tongyong_ui/game_ui/tongyong/dating/clip_dizhu3.png","clipX":10}},{"type":"Image","props":{"y":270,"x":96,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_df4.png"}},{"type":"Image","props":{"y":304,"x":104,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_zr4.png"}}]}]},{"type":"Button","props":{"y":670,"x":640,"var":"btn_join","stateNum":1,"skin":"tongyong_ui/game_ui/tongyong/dating/btn_ksjr.png","centerX":0,"bottom":10,"anchorY":0.5,"anchorX":0.5}}]},{"type":"Image","props":{"top":10,"skin":"rniuniu_ui/game_ui/rniuniu/qznn_title.png","centerX":200,"anchorY":0.5,"anchorX":0.5}}]};
+        public static  uiView:any ={"type":"View","props":{"width":1280,"height":720},"child":[{"type":"Image","props":{"top":-1,"skin":"rniuniu_ui/game_ui/rniuniu/tu_zjh.png","right":-1,"left":-1,"bottom":-1,"anchorY":0.5,"anchorX":0.5}},{"type":"Hud","props":{"var":"view","top":-1,"right":-1,"left":-1,"bottom":-1,"runtime":"ui.nqp.game_ui.tongyong.HudUI"}},{"type":"Image","props":{"top":10,"skin":"rniuniu_ui/game_ui/rniuniu/qznn_title.png","centerX":200,"anchorY":0.5,"anchorX":0.5}},{"type":"Box","props":{"width":910,"var":"box_roomcard","top":-1,"right":0,"bottom":0,"anchorY":0.5,"anchorX":0.5},"child":[{"type":"Image","props":{"y":362,"var":"img_room_create","skin":"tongyong_ui/game_ui/tongyong/hud/tu_fangka.png","right":421,"anchorY":0.5,"anchorX":0.5},"child":[{"type":"Image","props":{"y":14,"x":43,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_fangka2.png"}}]},{"type":"Image","props":{"y":362,"var":"img_room_join","skin":"tongyong_ui/game_ui/tongyong/hud/tu_fangka1.png","right":72,"anchorY":0.5,"anchorX":0.5},"child":[{"type":"Image","props":{"y":39,"x":83,"skin":"tongyong_ui/game_ui/tongyong/hud/tu_fangka3.png"}}]}]}]};
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("ui.nqp.game_ui.tongyong.HudUI",ui.nqp.game_ui.tongyong.HudUI);
-			View.regComponent("SkeletonPlayer",laya.ani.bone.Skeleton);
 
             super.createChildren();
             this.createView(ui.nqp.game_ui.rniuniu.QiangZhuangNN_HUDUI.uiView);

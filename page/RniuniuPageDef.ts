@@ -48,7 +48,7 @@ module gamerniuniu.page {
 				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "touxiang.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "qz.atlas",
-				Path_game_rniuniu.atlas_game_ui + "niuniu.atlas",
+				Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "qifu.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/suiji.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/fapai_1.atlas",
@@ -66,8 +66,8 @@ module gamerniuniu.page {
 				PathGameTongyong.atlas_game_ui_tongyong + "dating.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "logo.atlas",
 				Path.custom_atlas_scene + 'card.atlas',
-				Path.map + 'pz_niuniu.png',
-				Path.map_far + 'bg_niuniu.jpg',
+				Path.map + 'pz_rniuniu.png',
+				Path.map_far + 'bg_rniuniu.jpg',
 			]
 
 			if (WebConfig.needMusicPreload) {

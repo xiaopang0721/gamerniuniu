@@ -18,7 +18,7 @@ module gamerniuniu.page {
 
 		// 页面初始化函数
 		protected init(): void {
-			this._viewUI = this.createView('game_ui.niuniu.JieSuanUI');
+			this._viewUI = this.createView('game_ui.rniuniu.JieSuanUI');
 			this.addChild(this._viewUI);
 			this._niuStory = this._game.sceneObjectMgr.story as RniuniuStory;
 			this._niuMgr = this._niuStory.niuMgr;

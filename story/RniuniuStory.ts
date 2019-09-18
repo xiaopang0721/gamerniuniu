@@ -59,10 +59,7 @@ module gamerniuniu.story {
 
 		private createObj() {
 			let card = this._game.sceneObjectMgr.createOfflineObject(SceneRoot.CARD_MARK, RniuniuData) as RniuniuData;
-			card.pos = new Vector2(965, 220);
-			// let mainUnit: Unit = this._game.sceneObjectMgr.mainUnit;
-			// card.myOwner(u, mainUnit == u, mainUnit.GetIndex());
-			// card.index = index;
+			card.pos = new Vector2(980, 190);
 			return card;
 		}
 
