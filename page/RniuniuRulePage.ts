@@ -8,7 +8,7 @@ module gamerniuniu.page {
 		TYPE_CARD_DAXIAO = 2,
 		TYPE_CARD_BEISHU = 3,
 	}
-	export class NiuNiuRulePage extends game.gui.base.Page {
+	export class RniuniuRulePage extends game.gui.base.Page {
 		private _viewUI: ui.nqp.game_ui.rniuniu.QiangZhuangNN_GuiZeUI;
 
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {

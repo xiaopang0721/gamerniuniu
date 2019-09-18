@@ -2,7 +2,7 @@
 * name 
 */
 module gamerniuniu.page{
-	export class NiuNiuTongShaPage extends game.gui.base.Page {
+	export class RniuniuTongShaPage extends game.gui.base.Page {
 		private _viewUI: ui.nqp.game_ui.tongyong.effect.TongPeiUI;
 
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {

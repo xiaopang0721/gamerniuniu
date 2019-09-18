@@ -29,17 +29,17 @@ module gamerniuniu.page {
 		static myinit(str: string) {
 			super.myinit(str);
 			RniuniuClip.init();
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU] = NiuNiuPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_MAP] = NiuNiuCardMapPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_BEGIN] = NiuNiuBeginPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_WIN] = NiuNiuWinPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_LOSE] = NiuNiuLosePage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_RULE] = NiuNiuRulePage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_TONGSHA] = NiuNiuTongShaPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_TONGPEI] = NiuNiuTongPeiPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM] = NiuNiuCreateCardRoom;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_JOIN_CARDROOM] = NiuNiuJoinCardRoom;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE] = NiuNiuSettlePage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU] = RniuniuPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_MAP] = RNiuNiuMapPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_BEGIN] = RniuniuBeginPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_WIN] = RniuniuWinPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_LOSE] = RniuniuLosePage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_RULE] = RniuniuRulePage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_TONGSHA] = RniuniuTongShaPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_TONGPEI] = RniuniuTongPeiPage;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM] = RniuniuCreateCardRoom;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_JOIN_CARDROOM] = RniuniuJoinCardRoom;
+			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE] = RniuniuSettlePage;
 
 
 			this["__needLoadAsset"] = [

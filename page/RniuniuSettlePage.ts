@@ -2,7 +2,7 @@
 * name 
 */
 module gamerniuniu.page {
-	export class NiuNiuSettlePage extends game.gui.base.Page {
+	export class RniuniuSettlePage extends game.gui.base.Page {
 		private _viewUI: ui.nqp.game_ui.rniuniu.JieSuanUI;
 		private _niuMgr: RniuniuMgr;
 		private _niuStory: RniuniuStory;

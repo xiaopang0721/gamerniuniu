@@ -2,8 +2,8 @@
 * name 
 */
 module gamerniuniu.page{
-	export class NiuNiuLosePage extends game.gui.base.Page {
-		private _viewUI: ui.nqp.game_ui.rniuniu.JieSuan_2UI;
+	export class RniuniuBeginPage extends game.gui.base.Page {
+		private _viewUI: ui.nqp.game_ui.rniuniu.GoUI;
 		
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
 			super(v, onOpenFunc, onCloseFunc);
@@ -14,7 +14,7 @@ module gamerniuniu.page{
 
 		// 页面初始化函数
 		protected init(): void {
-			this._viewUI = this.createView('game_ui.niuniu.JieSuan_2UI');
+			this._viewUI = this.createView('game_ui.niuniu.GoUI');
 			this.addChild(this._viewUI);
 		}
 
@@ -25,17 +25,14 @@ module gamerniuniu.page{
 			this._viewUI.ani1.play(0, false);
 		}
 	
-		private onPlayComplte(): void {
-			Laya.timer.once(1000, this, () => {
-				this.close();
-			})
-		}
+        private onPlayComplte(): void {
+            this.close();
+        }
 
 		public close(): void {
 			if (this._viewUI) {
 				this._viewUI.ani1.off(LEvent.COMPLETE, this, this.onPlayComplte);
 			}
-			Laya.timer.clearAll(this);
 			super.close();
 		}
 	}

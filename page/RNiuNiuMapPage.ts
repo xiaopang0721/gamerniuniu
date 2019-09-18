@@ -47,7 +47,7 @@ module gamerniuniu.page {
         "191": [1, 0],    //房卡
     };
     const CARD_TYPE = ["没牛", "牛一", "牛二", "牛三", "牛四", "牛五", "牛六", "牛七", "牛八", "牛九", "牛牛", "四花牛", "五花牛", "炸弹", "五小牛"];    //牌型
-    export class NiuNiuCardMapPage extends game.gui.base.Page {
+    export class RNiuNiuMapPage extends game.gui.base.Page {
         private _viewUI: ui.nqp.game_ui.rniuniu.QiangZhuangNNUI;
         private _kuangView: ui.nqp.game_ui.tongyong.effect.SuiJiUI;//随机庄家框特效
         private _niuMgr: RniuniuMgr;//牛牛管理器
@@ -1287,7 +1287,7 @@ module gamerniuniu.page {
                     this.showMenu(true);
                     break;
                 case this._viewUI.btn_cardType://牌型
-                    this._game.uiRoot.general.open(RniuniuPageDef.PAGE_NIUNIU_RULE, (page: NiuNiuRulePage) => {
+                    this._game.uiRoot.general.open(RniuniuPageDef.PAGE_NIUNIU_RULE, (page: RniuniuRulePage) => {
                         page.dataSource = 1;
                     });
                     break;

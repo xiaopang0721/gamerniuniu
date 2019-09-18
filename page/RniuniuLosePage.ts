@@ -2,19 +2,19 @@
 * name 
 */
 module gamerniuniu.page{
-	export class NiuNiuTongPeiPage extends game.gui.base.Page {
-		private _viewUI: ui.nqp.game_ui.tongyong.effect.TongShaUI;
-
+	export class RniuniuLosePage extends game.gui.base.Page {
+		private _viewUI: ui.nqp.game_ui.rniuniu.JieSuan_2UI;
+		
 		constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
 			super(v, onOpenFunc, onCloseFunc);
 			this._asset = [
-				PathGameTongyong.atlas_game_ui_tongyong+ "general.atlas",
+				Path_game_rniuniu.atlas_game_ui + "niuniu.atlas",
 			];
 		}
 
 		// 页面初始化函数
 		protected init(): void {
-			this._viewUI = this.createView('game_ui.tongyong.effect.TongShaUI');
+			this._viewUI = this.createView('game_ui.niuniu.JieSuan_2UI');
 			this.addChild(this._viewUI);
 		}
 
@@ -24,7 +24,7 @@ module gamerniuniu.page{
 			this._viewUI.ani1.on(LEvent.COMPLETE, this, this.onPlayComplte);
 			this._viewUI.ani1.play(0, false);
 		}
-
+	
 		private onPlayComplte(): void {
 			Laya.timer.once(1000, this, () => {
 				this.close();

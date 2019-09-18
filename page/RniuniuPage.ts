@@ -2,7 +2,7 @@
 * 牛牛
 */
 module gamerniuniu.page {
-	export class NiuNiuPage extends game.gui.base.Page {
+	export class RniuniuPage extends game.gui.base.Page {
 		private _viewUI: ui.nqp.game_ui.rniuniu.QiangZhuangNN_HUDUI;
 		private _difenTmep: any = [1, 10, 50, 100];
 		private _leastTmep: any = [20, 200, 500, 1000];
