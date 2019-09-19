@@ -584,25 +584,26 @@ module gamerniuniu.page {
             this._bankerList = _info;
             this._viewUI.addChild(this._kuangView);
             this._kuangView.ani1.gotoAndStop(0)
-            this.count = 0;
-            Laya.timer.loop(150, this, this.ranEffPos);
+            this._count = 0;
+            Laya.timer.loop(this._diff_ran, this, this.ranEffPos);
             this.ranEffPos();
         }
 
-        private count: number = 0;
-        private curIndex: number = 0;
+        private _diff_ran: number = 200;
+        private _count: number = 0;
+        private _curIndex: number = 0;
         private ranEffPos(): void {
             if (!this._game.mainScene || !this._game.mainScene.camera) return;
-            if (this.curIndex >= this._bankerList.length) {
-                this.curIndex = 0;
+            if (this._curIndex >= this._bankerList.length) {
+                this._curIndex = 0;
             }
-            let randIndex = this.getUnitUIPos(this._bankerList[this.curIndex]);
+            let randIndex = this.getUnitUIPos(this._bankerList[this._curIndex]);
             let posX = this._game.mainScene.camera.getScenePxByCellX(this._playerList[randIndex].x + this._playerList[randIndex].view_icon.x - 26);
             let posY = this._game.mainScene.camera.getScenePxByCellY(this._playerList[randIndex].y + this._playerList[randIndex].view_icon.y - 23);
             this._kuangView.pos(posX, posY);
             this._game.playSound(Path_game_rniuniu.music_niuniu + "suiji.mp3", false);
             if (randIndex == this._bankerIndex) {
-                if (this.count >= 25) {
+                if (this._count >= 2000) {
                     this._kuangView.ani1.play(0, false)
                     Laya.timer.once(1000, this, () => {
                         this._game.playSound(Path_game_rniuniu.music_niuniu + "suidao.mp3", false);
@@ -613,8 +614,8 @@ module gamerniuniu.page {
                     return;
                 }
             }
-            this.curIndex++;
-            this.count++;
+            this._curIndex++;
+            this._count += this._diff_ran;
         }
 
         //下注倍数按钮更新
@@ -1296,7 +1297,7 @@ module gamerniuniu.page {
                     this._game.playSound(Path_game_rniuniu.music_niuniu + "pingpaiwancheng.mp3", false);
                     this._niuMgr.gaipai();
                     this._niuStory.isGaiPai = true;
-                    this._game.network.call_niuniu_pinpai();
+                    this._game.network.call_rniuniu_pinpai();
                     this._viewUI.box_matchPoint.visible = false;
                     this._viewUI.box_btn.visible = false;
                     this._viewUI.box_xinshou.visible = false;
@@ -1312,7 +1313,7 @@ module gamerniuniu.page {
                     this._game.playSound(Path_game_rniuniu.music_niuniu + "pingpaiwancheng.mp3", false);
                     this._niuMgr.gaipai();
                     this._niuStory.isGaiPai = true;
-                    this._game.network.call_niuniu_pinpai();
+                    this._game.network.call_rniuniu_pinpai();
                     this._viewUI.box_matchPoint.visible = false;
                     this._viewUI.box_btn.visible = false;
                     this._viewUI.box_xinshou.visible = false;
@@ -1367,49 +1368,49 @@ module gamerniuniu.page {
                     }
                     break;
                 case this._viewUI.btn_bankerRate0://不抢庄
-                    this._game.network.call_niuniu_banker(0);
+                    this._game.network.call_rniuniu_banker(0);
                     this._viewUI.box_bankerRate.visible = false;
                     this._viewUI.box_tips.visible = true;
                     this._viewUI.txt_tips.text = "等待其他玩家抢庄";
                     break;
                 case this._viewUI.btn_bankerRate1://抢庄倍数1
-                    this._game.network.call_niuniu_banker(1);
+                    this._game.network.call_rniuniu_banker(1);
                     this._viewUI.box_bankerRate.visible = false;
                     this._viewUI.box_tips.visible = true;
                     this._viewUI.txt_tips.text = "等待其他玩家抢庄";
                     break;
                 case this._viewUI.btn_bankerRate2://抢庄倍数2
-                    this._game.network.call_niuniu_banker(2);
+                    this._game.network.call_rniuniu_banker(2);
                     this._viewUI.box_bankerRate.visible = false;
                     this._viewUI.box_tips.visible = true;
                     this._viewUI.txt_tips.text = "等待其他玩家抢庄";
                     break;
                 case this._viewUI.btn_bankerRate3://抢庄倍数3
-                    this._game.network.call_niuniu_banker(3);
+                    this._game.network.call_rniuniu_banker(3);
                     this._viewUI.box_bankerRate.visible = false;
                     this._viewUI.box_tips.visible = true;
                     this._viewUI.txt_tips.text = "等待其他玩家抢庄";
                     break;
                 case this._viewUI.btn_betRate1://下注倍数1
-                    this._game.network.call_niuniu_bet(this._betList[0]);
+                    this._game.network.call_rniuniu_bet(this._betList[0]);
                     this._viewUI.box_betRate.visible = false;
                     this._viewUI.box_tips.visible = true;
                     this._viewUI.txt_tips.text = "等待其他玩家下注";
                     break;
                 case this._viewUI.btn_betRate2://下注倍数2
-                    this._game.network.call_niuniu_bet(this._betList[1]);
+                    this._game.network.call_rniuniu_bet(this._betList[1]);
                     this._viewUI.box_betRate.visible = false;
                     this._viewUI.box_tips.visible = true;
                     this._viewUI.txt_tips.text = "等待其他玩家下注";
                     break;
                 case this._viewUI.btn_betRate3://下注倍数3
-                    this._game.network.call_niuniu_bet(this._betList[2]);
+                    this._game.network.call_rniuniu_bet(this._betList[2]);
                     this._viewUI.box_betRate.visible = false;
                     this._viewUI.box_tips.visible = true;
                     this._viewUI.txt_tips.text = "等待其他玩家下注";
                     break;
                 case this._viewUI.btn_betRate4://下注倍数4
-                    this._game.network.call_niuniu_bet(this._betList[3]);
+                    this._game.network.call_rniuniu_bet(this._betList[3]);
                     this._viewUI.box_betRate.visible = false;
                     this._viewUI.box_tips.visible = true;
                     this._viewUI.txt_tips.text = "等待其他玩家下注";
