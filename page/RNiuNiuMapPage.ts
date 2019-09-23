@@ -417,7 +417,6 @@ module gamerniuniu.page {
                         }
                     }
                     this._playerList[index].view_icon.txt_name.text = getMainPlayerName(unit.GetName());
-                    this._playerList[index].view_icon.img_icon.skin = iconUrl;
                     if ((this._curStatus != MAP_STATUS.PLAY_STATUS_COMPARE && this._curStatus != MAP_STATUS.PLAY_STATUS_SETTLE) || this._niuStory.isReConnected) {
                         this.updateMoney();
                     }
@@ -467,6 +466,7 @@ module gamerniuniu.page {
                         }
                     } else {
                         this._playerList[index].view_icon.img_qifu.visible = false;
+                        this._playerList[index].view_icon.img_icon.skin = iconUrl;
                     }
                 }
             }
@@ -1437,7 +1437,7 @@ module gamerniuniu.page {
             let dataInfo = dataSource;
             this._game.qifuMgr.showFlayAni(this._viewUI.view0.view_icon, this._viewUI, dataSource, (dataInfo) => {
                 //相对应的玩家精灵做出反应
-                this._qifuTypeImgUrl = StringU.substitute(PathGameTongyong.ui_tongyong_qifu + "f_{0}2.png", this._nameStrInfo[dataInfo.qf_id - 1]);
+                this._qifuTypeImgUrl = StringU.substitute(PathGameTongyong.ui_tongyong_touxiang + "f_{0}2.png", this._nameStrInfo[dataInfo.qf_id - 1]);
                 this.onUpdateUnit(dataInfo.qifu_index);
             });
         }
