@@ -6,16 +6,6 @@ module gamerniuniu.page {
 		static GAME_NAME: string;
 		//牛牛地图UI
 		static PAGE_NIUNIU_MAP: string = "1";
-		//牛牛开始游戏动画界面
-		static PAGE_NIUNIU_BEGIN: string = "2";
-		//牛牛胜利动画界面
-		static PAGE_NIUNIU_WIN: string = "3";
-		//牛牛失败动画界面
-		static PAGE_NIUNIU_LOSE: string = "4";
-		//牛牛游戏通杀界面
-		static PAGE_NIUNIU_TONGSHA: string = "5";
-		//牛牛游戏通赔界面
-		static PAGE_NIUNIU_TONGPEI: string = "6";
 
 		//房卡系列
 		static PAGE_NIUNIU_CREATE_CARDROOM: string = "7";	// 创建房间
@@ -28,25 +18,21 @@ module gamerniuniu.page {
 			super.myinit(str);
 			RniuniuClip.init();
 			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_MAP] = RNiuNiuMapPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_BEGIN] = RniuniuBeginPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_WIN] = RniuniuWinPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_LOSE] = RniuniuLosePage;
 			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_RULE] = RniuniuRulePage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_TONGSHA] = RniuniuTongShaPage;
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_TONGPEI] = RniuniuTongPeiPage;
 			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM] = RniuniuCreateCardRoom;
 			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_JOIN_CARDROOM] = RniuniuJoinCardRoom;
 			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE] = RniuniuSettlePage;
 
 
 			this["__needLoadAsset"] = [
+				Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "hud.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "pai.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "touxiang.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "qz.atlas",
-				Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
-				PathGameTongyong.atlas_game_ui_tongyong + "qifu.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/qifu.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "fk.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/suiji.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/fapai_1.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/xipai.atlas",

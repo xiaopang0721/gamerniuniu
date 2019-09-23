@@ -36,11 +36,11 @@ module gamerniuniu.page {
 			this._endTime = this.dataSource[2];
 			this._viewUI.lab_xinxi.visible = this.dataSource[0];
 			this._viewUI.btn_create_room.visible = false;
-			this._viewUI.btn_back_hud.visible = false;
+			// this._viewUI.btn_back_hud.visible = false;
 			this._viewUI.btn_create_room.visible = this.dataSource[0] == this.dataSource[1];
-			this._viewUI.btn_back_hud.visible = this.dataSource[0] == this.dataSource[1];
+			// this._viewUI.btn_back_hud.visible = this.dataSource[0] == this.dataSource[1];
 			this._viewUI.btn_create_room.on(LEvent.CLICK, this, this.onBtnClickWithTween);
-			this._viewUI.btn_back_hud.on(LEvent.CLICK, this, this.onBtnClickWithTween);
+			// this._viewUI.btn_back_hud.on(LEvent.CLICK, this, this.onBtnClickWithTween);
 		}
 
 		//按钮点击
@@ -50,10 +50,10 @@ module gamerniuniu.page {
 					this._game.uiRoot.general.open(RniuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM);
 					this.close();
 					break;
-				case this._viewUI.btn_back_hud:
-					this._game.sceneObjectMgr.leaveStory(true);
-					this.close();
-					break;
+				// case this._viewUI.btn_back_hud:
+				// 	this._game.sceneObjectMgr.leaveStory(true);
+				// 	this.close();
+				// 	break;
 			}
 		}
 
@@ -84,7 +84,7 @@ module gamerniuniu.page {
 
 		public close(): void {
 			this._viewUI.btn_create_room.off(LEvent.CLICK, this, this.onBtnClickWithTween);
-			this._viewUI.btn_back_hud.off(LEvent.CLICK, this, this.onBtnClickWithTween);
+			// this._viewUI.btn_back_hud.off(LEvent.CLICK, this, this.onBtnClickWithTween);
 
 			super.close();
 		}
@@ -96,7 +96,7 @@ module gamerniuniu.page {
 		setData(game: Game, data: any) {
 			this._game = game;
 			this._data = data;
-			this.img_bg.visible = this._data.isMain;
+			// this.img_bg.visible = this._data.isMain;
 			this.img_banker.visible = this._data.isbanker;
 			this.lab_name.text = this._data.name;
 			this.lab_difen.text = this._data.difen.toString();
