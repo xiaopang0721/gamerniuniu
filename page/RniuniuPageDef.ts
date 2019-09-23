@@ -4,24 +4,22 @@
 module gamerniuniu.page {
 	export class RniuniuPageDef extends game.gui.page.PageDef {
 		static GAME_NAME: string;
-		//牛牛界面
-		static PAGE_NIUNIU: string = "1";
 		//牛牛地图UI
-		static PAGE_NIUNIU_MAP: string = "2";
+		static PAGE_NIUNIU_MAP: string = "1";
 		//牛牛开始游戏动画界面
-		static PAGE_NIUNIU_BEGIN: string = "3";
+		static PAGE_NIUNIU_BEGIN: string = "2";
 		//牛牛胜利动画界面
-		static PAGE_NIUNIU_WIN: string = "4";
+		static PAGE_NIUNIU_WIN: string = "3";
 		//牛牛失败动画界面
-		static PAGE_NIUNIU_LOSE: string = "5";
+		static PAGE_NIUNIU_LOSE: string = "4";
 		//牛牛游戏通杀界面
-		static PAGE_NIUNIU_TONGSHA: string = "8";
+		static PAGE_NIUNIU_TONGSHA: string = "5";
 		//牛牛游戏通赔界面
-		static PAGE_NIUNIU_TONGPEI: string = "9";
+		static PAGE_NIUNIU_TONGPEI: string = "6";
 
 		//房卡系列
-		static PAGE_NIUNIU_CREATE_CARDROOM: string = "14";	// 创建房间
-		static PAGE_NIUNIU_CARDROOM_SETTLE: string = "16";	// 房卡结算页
+		static PAGE_NIUNIU_CREATE_CARDROOM: string = "7";	// 创建房间
+		static PAGE_NIUNIU_CARDROOM_SETTLE: string = "8";	// 房卡结算页
 		static PAGE_NIUNIU_JOIN_CARDROOM: string = "100";	// 加入房间
 		//牛牛游戏规则界面
 		static PAGE_NIUNIU_RULE: string = "101";
@@ -29,7 +27,6 @@ module gamerniuniu.page {
 		static myinit(str: string) {
 			super.myinit(str);
 			RniuniuClip.init();
-			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU] = RniuniuPage;
 			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_MAP] = RNiuNiuMapPage;
 			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_BEGIN] = RniuniuBeginPage;
 			PageDef._pageClassMap[RniuniuPageDef.PAGE_NIUNIU_WIN] = RniuniuWinPage;
