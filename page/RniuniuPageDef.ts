@@ -31,7 +31,6 @@ module gamerniuniu.page {
 				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "touxiang.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "qz.atlas",
-				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/qifu.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "fk.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/suiji.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/fapai_1.atlas",
