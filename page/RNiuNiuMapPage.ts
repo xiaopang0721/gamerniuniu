@@ -40,10 +40,6 @@ module gamerniuniu.page {
     };
     // 房间底注和限入配置
     const ROOM_CONFIG = {
-        "21": [1, 20],    //新手
-        "22": [10, 200],  //初级
-        "23": [50, 500],  //中级
-        "24": [100, 1000],    //高级
         "191": [1, 0],    //房卡
     };
     const CARD_TYPE = ["没牛", "牛一", "牛二", "牛三", "牛四", "牛五", "牛六", "牛七", "牛八", "牛九", "牛牛", "四花牛", "五花牛", "炸弹", "五小牛"];    //牌型
@@ -143,7 +139,7 @@ module gamerniuniu.page {
             this._viewUI.btn_zhanji.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.view_card.btn_start.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.view_card.btn_invite.on(LEvent.CLICK, this, this.onBtnClickWithTween);
-            // this._viewUI.view_card.btn_dismiss.on(LEvent.CLICK, this, this.onBtnClickWithTween);
+            this._viewUI.btn_dismiss.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.btn_qifu.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._game.sceneObjectMgr.on(SceneObjectMgr.EVENT_OPRATE_SUCESS, this, this.onSucessHandler);
             this._game.sceneObjectMgr.on(SceneObjectMgr.EVENT_ADD_UNIT, this, this.onUnitAdd);
@@ -238,7 +234,6 @@ module gamerniuniu.page {
             this._viewUI.text_cardroomid.text = "房间号：" + this._niuMapInfo.GetCardRoomId();
             this._viewUI.view_card.btn_invite.visible = true;
             this._viewUI.view_card.btn_invite.x = this._niuStory.isCardRoomMaster() ? 420 : this._viewUI.view_card.btn_start.x;
-            // this._viewUI.view_card.btn_dismiss.visible = this._niuStory.isCardRoomMaster();
             this._viewUI.view_card.btn_start.visible = this._niuStory.isCardRoomMaster();
         }
 
@@ -263,7 +258,7 @@ module gamerniuniu.page {
                 }, true);
             } else {
                 if (!this._isGameEnd) {
-                    TongyongPageDef.ins.alertRecharge("游戏未开始，解散房间不会扣除金币！\n是否解散房间？", () => {
+                    TongyongPageDef.ins.alertRecharge("游戏未开始，解散不会扣除房费！\n是否解散房间？", () => {
                         this._niuStory.endRoomCardGame(mainUnit.GetIndex(), this._niuMapInfo.GetCardRoomId());
                         this._game.sceneObjectMgr.leaveStory(true);
                     }, null, false, PathGameTongyong.ui_tongyong_general + "btn_tx.png");
@@ -308,6 +303,7 @@ module gamerniuniu.page {
 
         //玩家进来了
         private onUnitAdd(u: Unit) {
+            this._game.showTips(StringU.substitute("欢迎{0}加入房间"), u.GetName());
             this.onUpdateUnit();
         }
 
@@ -1378,9 +1374,9 @@ module gamerniuniu.page {
                         this._game.network.call_get_roomcard_share(RniuniuPageDef.GAME_NAME);
                     }
                     break;
-                // case this._viewUI.view_card.btn_dismiss://房卡解散
-                //     this.masterDismissCardGame();
-                //     break;
+                case this._viewUI.btn_dismiss://房卡解散
+                    this.masterDismissCardGame();
+                    break;
                 case this._viewUI.view_card.btn_start:////房卡开始
                     this.setCardGameStart();
                     break;
@@ -1625,7 +1621,7 @@ module gamerniuniu.page {
                 this._viewUI.btn_zhanji.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.view_card.btn_start.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.view_card.btn_invite.off(LEvent.CLICK, this, this.onBtnClickWithTween);
-                // this._viewUI.view_card.btn_dismiss.off(LEvent.CLICK, this, this.onBtnClickWithTween);
+                this._viewUI.btn_dismiss.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.btn_qifu.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._game.sceneObjectMgr.off(SceneObjectMgr.EVENT_OPRATE_SUCESS, this, this.onSucessHandler);
                 this._viewUI.xipai.ani_xipai.off(LEvent.COMPLETE, this, this.onWashCardOver);
