@@ -443,7 +443,7 @@ module gamerniuniu.manager {
 			for (let i: number = 0; i < 5; i++) {
 				let card = this._cards[i];
 				if (!card) return;
-				card.toggle = false;
+				card.toggleDistance = 0;
 				card.yipai();
 				card.gaipai();
 			}

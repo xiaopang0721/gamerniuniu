@@ -158,6 +158,7 @@ module gamerniuniu.page {
             } else {
                 this._curDiffTime -= diff;
             }
+            this._initTouPiao && (this._viewUI.view_tp as TouPiaoJieSanPage).update(diff);
         }
 
         //倍数
@@ -217,10 +218,13 @@ module gamerniuniu.page {
         // 房卡按纽及状态
         private setCardRoomBtnVisible() {
             if (this._isPlaying) return;
+            let isRoomMaster: boolean = this._niuStory.isCardRoomMaster();
             this._viewUI.text_cardroomid.text = this._niuMapInfo.GetCardRoomId().toString();
             this._viewUI.view_card.btn_invite.visible = true;
-            this._viewUI.view_card.btn_invite.x = this._niuStory.isCardRoomMaster() ? 420 : this._viewUI.view_card.btn_start.x;
-            this._viewUI.view_card.btn_start.visible = this._niuStory.isCardRoomMaster();
+            this._viewUI.view_card.btn_invite.x = isRoomMaster ? 420 : this._viewUI.view_card.btn_start.x;
+            this._viewUI.view_card.btn_start.visible = isRoomMaster;
+            this._viewUI.btn_dismiss.skin = isRoomMaster ? PathGameTongyong.ui_tongyong_general + "btn_js.png" : PathGameTongyong.ui_tongyong_general + "btn_fh1.png";
+            this._viewUI.btn_dismiss.tag = isRoomMaster ? 2 : 1;
         }
 
         // 是否可以提前终止游戏
@@ -263,6 +267,7 @@ module gamerniuniu.page {
             return count;
         }
 
+        private _initTouPiao: boolean = false;
         private setCardGameStart() {
             let mainUnit: Unit = this._game.sceneObjectMgr.mainUnit;
             if (!mainUnit) return;
@@ -283,6 +288,9 @@ module gamerniuniu.page {
                 return;
             }
             this._niuStory.startRoomCardGame(mainUnit.guid, this._niuMapInfo.GetCardRoomId());
+            //初始化投票组件
+            (this._viewUI.view_tp as TouPiaoJieSanPage).initUI(this._game, this._viewUI.view_tp, this._niuMapInfo, this._niuMgr.totalUnitCount);
+            this._initTouPiao = true;
         }
         /******************************************************************** */
 
@@ -732,6 +740,20 @@ module gamerniuniu.page {
                         this.onBattleSettle(battleInfo);
                     }
                 }
+                else if (battleInfo instanceof gamecomponent.object.BattleInfoSponsorVote)//投票状态
+                {
+                    if (this._battleIndex < i) {
+                        this._battleIndex = i;
+                        (this._viewUI.view_tp as TouPiaoJieSanPage).onBattleUpdate(battleInfo);
+                    }
+                }
+                else if (battleInfo instanceof gamecomponent.object.BattleInfoVoting)//投票
+                {
+                    if (this._battleIndex < i) {
+                        this._battleIndex = i;
+                        (this._viewUI.view_tp as TouPiaoJieSanPage).onBattleUpdate(battleInfo);
+                    }
+                }
             }
 
         }
@@ -874,9 +896,9 @@ module gamerniuniu.page {
             this._viewUI.img_yiwancheng.visible = false;
             Laya.timer.once(1000 + 1000 * i, this, () => {
                 this._viewUI.main_cardtype.visible = true;
+                this.setCardType(this._viewUI.main_cardtype, cardType, true);
                 this._game.playSound(Path_game_rniuniu.music_niuniu + "" + StringU.substitute("niu{0}_{1}.mp3", cardType, sex), false);
             })
-            this.setCardType(this._viewUI.main_cardtype, cardType);
         }
 
         //显示主玩家牌型（断线重连）
@@ -884,7 +906,7 @@ module gamerniuniu.page {
             this._viewUI.img_yiwancheng.visible = false;
             this._viewUI.main_cardtype.visible = true;
             this._game.playSound(Path_game_rniuniu.music_niuniu + "" + StringU.substitute("niu{0}_{1}.mp3", cardType, sex), false);
-            this.setCardType(this._viewUI.main_cardtype, cardType);
+            this.setCardType(this._viewUI.main_cardtype, cardType, false);
         }
 
         //显示其他玩家牌型
@@ -892,9 +914,9 @@ module gamerniuniu.page {
             this._playerList[curIndex].img_yiwancheng.visible = false;
             Laya.timer.once(1000 + 1000 * i, this, () => {
                 this._playerList[curIndex].box_cardType.visible = true;
+                this.setCardType(this._playerList[curIndex].box_cardType, cardType, true);
                 this._game.playSound(Path_game_rniuniu.music_niuniu + "" + StringU.substitute("niu{0}_{1}.mp3", cardType, sex), false);
             })
-            this.setCardType(this._playerList[curIndex].box_cardType, cardType);
         }
 
         //显示其他玩家牌型（断线重连）
@@ -902,33 +924,33 @@ module gamerniuniu.page {
             this._playerList[curIndex].img_yiwancheng.visible = false;
             this._playerList[curIndex].box_cardType.visible = true;
             this._game.playSound(Path_game_rniuniu.music_niuniu + "" + StringU.substitute("niu{0}_{1}.mp3", cardType, sex), false);
-            this.setCardType(this._playerList[curIndex].box_cardType, cardType);
+            this.setCardType(this._playerList[curIndex].box_cardType, cardType, false);
         }
 
         //设置牌型组件，传入组件和牌型
-        private setCardType(view: any, cardType: number): void {
+        private setCardType(view: ui.nqp.game_ui.rniuniu.component.NiuPaiUI, cardType: number, isplay: Boolean): void {
             let type: number = 0;//默认没牛
             if (cardType == 0) {//没牛
-                view.ani0.play(0, false);
+                isplay && view.ani0.play(0, false);
             } else if (cardType > 0 && cardType < 8) {//牛一到牛七
                 type = 1;
                 view.type1.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "n_{0}.png", cardType);
                 view.rate1.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
-                view.ani1.play(0, false);
+                isplay && view.ani1.play(0, false);
             } else if (cardType >= 8 && cardType < 10) {//牛八，牛九
                 type = 2;
                 view.type2_1.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "n_{0}.png", cardType);
                 view.type2_2.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "n_{0}.png", cardType);
                 view.rate2_1.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
                 view.rate2_2.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
-                view.ani2.play(0, false);
+                isplay && view.ani2.play(0, false);
             } else if (cardType == 10) {//牛牛
                 type = 3;
                 view.type3_1.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "n_{0}.png", cardType);
                 view.type3_2.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "n_{0}.png", cardType);
                 view.rate3_1.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
                 view.rate3_2.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
-                view.ani3.play(0, false);
+                isplay && view.ani3.play(0, false);
             } else if (cardType >= 11 && cardType < 13 || cardType == 14) {//四花牛，五花牛，五小牛
                 type = 4;
                 if (cardType >= 11 && cardType < 13) {//四花牛，五花牛
@@ -944,12 +966,12 @@ module gamerniuniu.page {
                 }
                 view.rate4_1.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
                 view.rate4_2.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
-                view.ani4.play(0, false);
+                isplay && view.ani4.play(0, false);
             } else if (cardType == 13) {//炸弹
                 type = 5;
                 view.rate5_1.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
                 view.rate5_2.skin = StringU.substitute(Path_game_rniuniu.ui_niuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
-                view.ani5.play(0, false);
+                isplay && view.ani5.play(0, false);
             }
             for (let i = 0; i < 6; i++) {//显示当前牌型
                 view["box" + i].visible = type == i;
@@ -1004,6 +1026,7 @@ module gamerniuniu.page {
             Laya.Tween.clearAll(valueClip);
             Laya.Tween.to(valueClip, { y: valueClip.y - 30 }, 1500);
             if (value > 0) {
+                this._playerList[pos].eff_win.visible = true;
                 this._playerList[pos].eff_win.ani1.play(0, false);
             }
         }
@@ -1042,13 +1065,13 @@ module gamerniuniu.page {
         }
 
         //更新地图状态
+        private _noTimer: number[] = [MAP_STATUS.PLAY_STATUS_GAME_START, MAP_STATUS.PLAY_STATUS_GAME_SHUFFLE, MAP_STATUS.PLAY_STATUS_SET_BANKER, MAP_STATUS.PLAY_STATUS_PUSH_CARD, MAP_STATUS.PLAY_STATUS_COMPARE, MAP_STATUS.PLAY_STATUS_SETTLE, MAP_STATUS.PLAY_STATUS_SETTLE_INFO];
         private onUpdateStatus() {
             if (!this._niuMapInfo) return;
             if (this._curStatus == this._niuMapInfo.GetMapState()) return;
             this._curStatus = this._niuMapInfo.GetMapState();
             this._viewUI.box_bankerRate.visible = this._curStatus == MAP_STATUS.PLAY_STATUS_GET_BANKER;
-            if (this._curStatus == MAP_STATUS.PLAY_STATUS_SET_BANKER || this._curStatus == MAP_STATUS.PLAY_STATUS_GAME_START || this._curStatus == MAP_STATUS.PLAY_STATUS_PUSH_CARD
-                || this._curStatus == MAP_STATUS.PLAY_STATUS_COMPARE || this._curStatus == MAP_STATUS.PLAY_STATUS_SETTLE || this._curStatus == MAP_STATUS.PLAY_STATUS_GAME_SHUFFLE) {
+            if (this._noTimer.indexOf(this._curStatus) != -1) {
                 this._viewUI.box_timer.visible = false;
             }
             if (this._curStatus > MAP_STATUS.PLAY_STATUS_GAME_NONE && this._curStatus < MAP_STATUS.PLAY_STATUS_SHOW_GAME) {
@@ -1119,6 +1142,13 @@ module gamerniuniu.page {
                     this._viewUI.btn_tanpai.visible = true;
                     this._viewUI.box_matchPoint.visible = true;
                     this._niuMgr.isReKaiPai = false;
+                    if (localGetItem("rniuniu") == "0") {
+                        this._viewUI.box_xinshou.visible = true;
+                        Laya.timer.once(5000, this, () => {
+                            localSetItem("rniuniu", "1");
+                            this._viewUI.box_xinshou.visible = false;
+                        });
+                    }
                     break;
                 case MAP_STATUS.PLAY_STATUS_COMPARE:// 比牌阶段
                     this._viewUI.btn_tanpai.visible = false;
@@ -1258,7 +1288,7 @@ module gamerniuniu.page {
                     this._game.network.call_rniuniu_pinpai();
                     this._viewUI.box_matchPoint.visible = false;
                     this._viewUI.btn_tanpai.visible = false;
-                    // this._viewUI.box_xinshou.visible = false;
+                    this._viewUI.box_xinshou.visible = false;
                     this._viewUI.box_tips.visible = true;
                     this._viewUI.txt_tips.text = "等待其他玩家拼牌";
                     break;
@@ -1276,19 +1306,24 @@ module gamerniuniu.page {
                 case this._viewUI.box_xinshou://新手提示
                     this._viewUI.box_xinshou.visible = false;
                     break;
-                // case this._viewUI.btn_back://返回
-                //     if (!this.canEndCardGame()) return;
-                //     if (this._niuStory.isCardRoomMaster()) {
-                //         this.masterDismissCardGame();
-                //         return;
-                //     }
-
-                //     this.clearClips();
-                //     this.resetData();
-                //     this.clearMapInfoListen();
-                //     this._game.sceneObjectMgr.leaveStory(true);
-                //     logd("玩家发送离开地图协议，离开房间")
-                //     break;
+                case this._viewUI.btn_dismiss://返回
+                    if (this._viewUI.btn_dismiss.tag == 1) {
+                        //不是房主 
+                        if (!this.canEndCardGame()) return;
+                        if (this._niuStory.isCardRoomMaster()) {
+                            this.masterDismissCardGame();
+                            return;
+                        }
+                        this.clearClips();
+                        this.resetData();
+                        this.clearMapInfoListen();
+                        this._game.sceneObjectMgr.leaveStory(true);
+                        logd("玩家发送离开地图协议，离开房间")
+                    } else {
+                        //房卡解散
+                        this.masterDismissCardGame();
+                    }
+                    break;
                 case this._viewUI.btn_bankerRate0://不抢庄
                     this._game.network.call_rniuniu_banker(0);
                     this._viewUI.box_bankerRate.visible = false;
@@ -1343,9 +1378,6 @@ module gamerniuniu.page {
                     if (this._niuMapInfo.GetCardRoomId()) {
                         this._game.network.call_get_roomcard_share(RniuniuPageDef.GAME_NAME);
                     }
-                    break;
-                case this._viewUI.btn_dismiss://房卡解散
-                    this.masterDismissCardGame();
                     break;
                 case this._viewUI.view_card.btn_start:////房卡开始
                     this.setCardGameStart();
@@ -1449,7 +1481,7 @@ module gamerniuniu.page {
             this._viewUI.paixie.ani_chupai.gotoAndStop(0);
             this._viewUI.box_menu.visible = false;
             this._viewUI.box_menu.zOrder = 99;
-            this._viewUI.box_jiesan.visible = false;
+            this._viewUI.view_tp.visible = false;
             this._viewUI.box_dizhu.visible = false;
 
             this._playerList = [];
@@ -1531,6 +1563,7 @@ module gamerniuniu.page {
             this._game.sceneObjectMgr.off(RniuniuMapInfo.EVENT_GAME_ROUND_CHANGE, this, this.onUpdateGameRound);
             this._game.sceneObjectMgr.off(RniuniuMapInfo.EVENT_GAME_NO, this, this.onUpdateGameNo);//牌局号
             this._game.sceneObjectMgr.off(RniuniuMapInfo.EVENT_COUNT_DOWN, this, this.onUpdateCountDown);//倒计时更新
+
             this._game.sceneObjectMgr.off(SceneObjectMgr.EVENT_ADD_UNIT, this, this.onUnitAdd);
             this._game.sceneObjectMgr.off(SceneObjectMgr.EVENT_REMOVE_UNIT, this, this.onUnitRemove);
             this._game.sceneObjectMgr.off(SceneObjectMgr.EVENT_UNIT_MONEY_CHANGE, this, this.onUpdateUnit);
@@ -1600,6 +1633,7 @@ module gamerniuniu.page {
                 this._game.stopMusic();
                 this._kuangView && this._kuangView.removeSelf();
                 this.clearBeiClip();
+                (this._viewUI.view_tp as TouPiaoJieSanPage).destroy();
             }
             super.close();
         }

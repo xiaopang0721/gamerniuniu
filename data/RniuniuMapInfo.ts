@@ -13,6 +13,8 @@ module gamerniuniu.data {
 		static EVENT_GAME_NO: string = "RniuniuMapInfo.EVENT_GAME_NO";
 		//倒计时时间戳更新
 		static EVENT_COUNT_DOWN: string = "RniuniuMapInfo.EVENT_COUNT_DOWN";
+		//投票解散
+		static EVENT_TOUPIAO_TIME: string = "RniuniuMapInfo.EVENT_TOUPIAO_TIME";
 
 		constructor(v: SceneObjectMgr) {
 			super(v, () => { return new RniuniuData() });
