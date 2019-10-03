@@ -26,12 +26,15 @@ module gamerniuniu.page {
 
 			this["__needLoadAsset"] = [
 				Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
+				Path_game_rniuniu.atlas_game_ui + "rniuniu/qp.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "hud.atlas",
-				PathGameTongyong.atlas_game_ui_tongyong + "pai.atlas",
-				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
-				PathGameTongyong.atlas_game_ui_tongyong + "touxiang.atlas",
-				PathGameTongyong.atlas_game_ui_tongyong + "qz.atlas",
-				PathGameTongyong.atlas_game_ui_tongyong + "fk.atlas",
+                PathGameTongyong.atlas_game_ui_tongyong + "pai.atlas",
+                PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
+                PathGameTongyong.atlas_game_ui_tongyong + "touxiang.atlas",
+                PathGameTongyong.atlas_game_ui_tongyong + "dating.atlas",
+                PathGameTongyong.atlas_game_ui_tongyong + "qz.atlas",
+                PathGameTongyong.atlas_game_ui_tongyong + "fk.atlas",
+                PathGameTongyong.atlas_game_ui_tongyong + "chongzhi.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/suiji.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/fapai_1.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/xipai.atlas",
@@ -97,6 +100,7 @@ module gamerniuniu.page {
 					Path_game_rniuniu.music_niuniu + "zjtongchi.mp3",
 				])
 			}
+			this["__roomcard"] = Web_operation_fields.GAME_ROOM_CONFIG_CARD_ROOM;
 		}
 	}
 }

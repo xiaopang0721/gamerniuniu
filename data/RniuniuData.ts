@@ -7,7 +7,7 @@ module gamerniuniu.data {
 		private _isFan: boolean = false;
 		private _ownerIdx: number;
 		private _b: boolean;
-		private _posList: any = [[430, 630, 110], [980, 370, 28], [780, 230, 28], [405, 230, 28], [220, 370, 28]];
+		private _posList: any = [[430, 630, 110], [965, 390, 28], [785, 245, 28], [405, 245, 28], [220, 390, 28]];
 		private _mainIdx: number;
 
 		constructor() {
@@ -49,7 +49,7 @@ module gamerniuniu.data {
 			this.size = 0.2;
 			this._mainIdx = index;
 			this.rotateAngle = Math.PI / 6;
-			this.toggleDistance = 0;
+			this.toggleDistance = -10;
 		}
 
 		fapai() {
@@ -104,7 +104,7 @@ module gamerniuniu.data {
 			this.pos.y = posY;
 			this.targe_pos.x = posX + this.index * space;
 			this.targe_pos.y = posY;
-			this.scaleX = -1;
+		this.scaleX = -1;
 			this.rotateAngle = Math.PI * 4;
 			super.fapai();
 		}
@@ -113,10 +113,9 @@ module gamerniuniu.data {
 			if (!this.targe_pos) {
 				this.targe_pos = new Vector2();
 			}
-			this.toggleEnable = false;
 			this.isFinalPos = false;
 			this.targe_pos.x = 590 + this.index * 28;
-			this.targe_pos.y = 485;
+			this.targe_pos.y = 520;
 			this.size = 0.65;
 			if(!this.pos) return;
 			Laya.Tween.to(this.pos, { x: this.targe_pos.x, y: this.targe_pos.y }, this.time_interval);

@@ -12,7 +12,7 @@ module gamerniuniu.page {
 			this._isNeedBlack = true;
 			this._isClickBlack = false;
 			this._asset = [
-				PathGameTongyong.atlas_game_ui_tongyong+ "general.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
 			];
 		}
 
@@ -34,13 +34,10 @@ module gamerniuniu.page {
 
 			this._viewUI.list_settle.dataSource = this.dataSource[3];
 			this._endTime = this.dataSource[2];
-			this._viewUI.lab_xinxi.visible = this.dataSource[0];
-			this._viewUI.btn_create_room.visible = false;
-			// this._viewUI.btn_back_hud.visible = false;
-			this._viewUI.btn_create_room.visible = this.dataSource[0] == this.dataSource[1];
-			// this._viewUI.btn_back_hud.visible = this.dataSource[0] == this.dataSource[1];
+			this._viewUI.box_end.visible = this.dataSource[0] == this.dataSource[1];
+			this._viewUI.box_xinxi.visible = !this._viewUI.box_end.visible;
+			this._viewUI.txt_jushu.text = this.dataSource[0] + "/" + this.dataSource[1]
 			this._viewUI.btn_create_room.on(LEvent.CLICK, this, this.onBtnClickWithTween);
-			// this._viewUI.btn_back_hud.on(LEvent.CLICK, this, this.onBtnClickWithTween);
 		}
 
 		//按钮点击
@@ -50,10 +47,6 @@ module gamerniuniu.page {
 					this._game.uiRoot.general.open(RniuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM);
 					this.close();
 					break;
-				// case this._viewUI.btn_back_hud:
-				// 	this._game.sceneObjectMgr.leaveStory(true);
-				// 	this.close();
-				// 	break;
 			}
 		}
 
@@ -70,21 +63,16 @@ module gamerniuniu.page {
 			let curTime = this._game.sync.serverTimeBys;
 			let time = Math.floor(this._endTime - curTime) + 1;
 			if (time > 0) {
-				let str = time + "s后开始第" + (this.dataSource[0] + 1) + "局，本轮共" + this.dataSource[1] + "局";
-				this._viewUI.lab_xinxi.text = str;
+				this._viewUI.txt_daojishi.text = time + "s";
 			} else {
-				if (!this._viewUI.btn_create_room.visible) {
+				if (!this._viewUI.box_end.visible) {
 					this.close();
-				} else {
-					let str = "游戏结束，本轮共" + this.dataSource[1] + "局";
-					this._viewUI.lab_xinxi.text = str;
 				}
 			}
 		}
 
 		public close(): void {
 			this._viewUI.btn_create_room.off(LEvent.CLICK, this, this.onBtnClickWithTween);
-			// this._viewUI.btn_back_hud.off(LEvent.CLICK, this, this.onBtnClickWithTween);
 
 			super.close();
 		}
@@ -105,13 +93,13 @@ module gamerniuniu.page {
 			this.lab_jifen.text = this._data.jiFen.toString();
 			this.lab_totalJiFen.text = this._data.totalJiFen.toString();
 			this.lab_cardtype.text = this._data.cardtype;
-			this.lab_name.color = this._data.isMain ? TeaStyle.COLOR_JIESUAN : TeaStyle.COLOR_WHITE;
-			this.lab_difen.color = this._data.isMain ? TeaStyle.COLOR_JIESUAN : TeaStyle.COLOR_WHITE;
-			this.lab_betRate.color = this._data.isMain ? TeaStyle.COLOR_JIESUAN : TeaStyle.COLOR_WHITE;
+			this.lab_name.color = this._data.isMain ? TeaStyle.COLOR_ROOM_JIESUAN : TeaStyle.COLOR_WHITE;
+			this.lab_difen.color = this._data.isMain ? TeaStyle.COLOR_ROOM_JIESUAN : TeaStyle.COLOR_WHITE;
+			this.lab_betRate.color = this._data.isMain ? TeaStyle.COLOR_ROOM_JIESUAN : TeaStyle.COLOR_WHITE;
 			this.lab_jifen.color = parseFloat(this._data.jiFen) >= 0 ? TeaStyle.COLOR_GREEN : TeaStyle.COLOR_RED;
 			this.lab_totalJiFen.color = parseFloat(this._data.totalJiFen) >= 0 ? TeaStyle.COLOR_GREEN : TeaStyle.COLOR_RED;
-			this.lab_bankerRate.color = this._data.isMain ? TeaStyle.COLOR_JIESUAN : TeaStyle.COLOR_WHITE;
-			this.lab_cardtype.color = this._data.isMain ? TeaStyle.COLOR_JIESUAN : TeaStyle.COLOR_WHITE;
+			this.lab_bankerRate.color = this._data.isMain ? TeaStyle.COLOR_ROOM_JIESUAN : TeaStyle.COLOR_WHITE;
+			this.lab_cardtype.color = this._data.isMain ? TeaStyle.COLOR_ROOM_JIESUAN : TeaStyle.COLOR_WHITE;
 		}
 
 		destroy() {
