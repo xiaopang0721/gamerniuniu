@@ -48,6 +48,8 @@ module gamerniuniu.page {
         private _countDown: number;//倒计时时间戳
         private _isPlayXiPai: boolean = false;//播放洗牌
         private _getBankerCount: number = 0;//抢庄日志计数
+        private _toupiaoMgr: TouPiaoMgr;//投票解散管理器
+        private _toupiaoSuccess: boolean;//投票成功
         // 房卡系列
         private _totalPoint: Array<number> = [0, 0, 0, 0, 0];  // 当前玩家累计积分 分别是座位号-积分值 
         private _isPlaying: boolean = false;    //是否进行中
@@ -107,7 +109,6 @@ module gamerniuniu.page {
             //所有监听
             this._viewUI.btn_spread.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.btn_cardType.on(LEvent.CLICK, this, this.onBtnClickWithTween);
-            // this._viewUI.btn_back.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.btn_rule.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.btn_chongzhi.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.btn_set.on(LEvent.CLICK, this, this.onBtnClickWithTween);
@@ -158,7 +159,7 @@ module gamerniuniu.page {
             } else {
                 this._curDiffTime -= diff;
             }
-            this._initTouPiao && (this._viewUI.view_tp as TouPiaoJieSanPage).update(diff);
+            this._toupiaoMgr && this._toupiaoMgr.update(diff);
         }
 
         //倍数
@@ -221,37 +222,43 @@ module gamerniuniu.page {
             let isRoomMaster: boolean = this._niuStory.isCardRoomMaster();
             this._viewUI.text_cardroomid.text = this._niuMapInfo.GetCardRoomId().toString();
             this._viewUI.view_card.btn_invite.visible = true;
-            this._viewUI.view_card.btn_invite.x = isRoomMaster ? 420 : this._viewUI.view_card.btn_start.x;
+            this._viewUI.view_card.btn_invite.centerX = isRoomMaster ? -200 : 0;
             this._viewUI.view_card.btn_start.visible = isRoomMaster;
             this._viewUI.btn_dismiss.skin = isRoomMaster ? PathGameTongyong.ui_tongyong_general + "btn_js.png" : PathGameTongyong.ui_tongyong_general + "btn_fh1.png";
             this._viewUI.btn_dismiss.tag = isRoomMaster ? 2 : 1;
-        }
-
-        // 是否可以提前终止游戏
-        private canEndCardGame() {
-            if (this._isPlaying) {
-                TongyongPageDef.ins.alertRecharge(StringU.substitute("游戏中禁止退出，请先完成本轮" + this._niuMapInfo.GetCardRoomGameNumber() + "局游戏哦~~"), () => {
-                }, () => {
-                }, true);
-                return false;
-            }
-            return !this._isPlaying;
         }
 
         // 房卡模式解散游戏,是否需要房主限制
         private masterDismissCardGame() {
             let mainUnit: Unit = this._game.sceneObjectMgr.mainUnit;
             if (!mainUnit) return;
-            if (mainUnit.GetRoomMaster() != 1) {
-                TongyongPageDef.ins.alertRecharge(StringU.substitute("只有房主才可以解散房间哦"), () => {
-                }, () => {
-                }, true);
+            if (this._isPlaying) {
+                if (!this._toupiaoMgr) return;
+                //是否在投票中
+                if (this._toupiaoMgr.isTouPiaoing) {
+                    this._game.showTips("已发起投票，请等待投票结果");
+                    return;
+                } else {
+                    //在游戏中 发起投票选项
+                    TongyongPageDef.ins.alertRecharge(StringU.substitute("牌局尚未结束，需发起投票，<span color='{0}'>{1}</span>方可解散。", TeaStyle.COLOR_GREEN, "全员同意"), () => {
+                        //发起投票
+                        this._game.network.call_rniuniu_vote(1);
+                    }, null, true, TongyongPageDef.TIPS_SKIN_STR["fqtq"], TongyongPageDef.TIPS_SKIN_STR["title_ts"]);
+                }
+
             } else {
-                if (!this._isGameEnd) {
-                    TongyongPageDef.ins.alertRecharge("游戏未开始，解散不会扣除房费！\n是否解散房间？", () => {
-                        this._niuStory.endRoomCardGame(mainUnit.GetIndex(), this._niuMapInfo.GetCardRoomId());
-                        this._game.sceneObjectMgr.leaveStory(true);
-                    }, null, false, PathGameTongyong.ui_tongyong_general + "btn_tx.png");
+                //不在游戏中
+                if (!this._niuStory.isCardRoomMaster()) {
+                    TongyongPageDef.ins.alertRecharge(StringU.substitute("只有房主才可以解散房间哦"), () => {
+                    }, () => {
+                    }, true, TongyongPageDef.TIPS_SKIN_STR["qd"]);
+                } else {
+                    if (!this._isGameEnd) {
+                        TongyongPageDef.ins.alertRecharge("游戏未开始，解散房间不会扣除金币！\n是否解散房间？", () => {
+                            this._niuStory.endRoomCardGame(mainUnit.GetIndex(), this._niuMapInfo.GetCardRoomId());
+                            this._game.sceneObjectMgr.leaveStory();
+                        }, null, true, TongyongPageDef.TIPS_SKIN_STR["js"], TongyongPageDef.TIPS_SKIN_STR["title_ts"], null, TongyongPageDef.TIPS_SKIN_STR["btn_red"]);
+                    }
                 }
             }
         }
@@ -267,7 +274,6 @@ module gamerniuniu.page {
             return count;
         }
 
-        private _initTouPiao: boolean = false;
         private setCardGameStart() {
             let mainUnit: Unit = this._game.sceneObjectMgr.mainUnit;
             if (!mainUnit) return;
@@ -280,17 +286,13 @@ module gamerniuniu.page {
                 }, true);
                 return;
             }
-            this._niuMgr.totalUnitCount = this.getUnitCount();
-            if (this._niuMgr.totalUnitCount < RniuniuMgr.MIN_CARD_SEATS_COUNT) {
+            if (this.getUnitCount() < RniuniuMgr.MIN_CARD_SEATS_COUNT) {
                 TongyongPageDef.ins.alertRecharge(StringU.substitute("老板，再等等嘛，需要两个人才可以开始"), () => {
                 }, () => {
                 }, true);
                 return;
             }
             this._niuStory.startRoomCardGame(mainUnit.guid, this._niuMapInfo.GetCardRoomId());
-            //初始化投票组件
-            (this._viewUI.view_tp as TouPiaoJieSanPage).initUI(this._game, this._viewUI.view_tp, this._niuMapInfo, this._niuMgr.totalUnitCount);
-            this._initTouPiao = true;
         }
         /******************************************************************** */
 
@@ -744,14 +746,15 @@ module gamerniuniu.page {
                 {
                     if (this._battleIndex < i) {
                         this._battleIndex = i;
-                        (this._viewUI.view_tp as TouPiaoJieSanPage).onBattleUpdate(battleInfo);
+                        this._toupiaoMgr.onBattleUpdate(battleInfo);
+                        if (battleInfo.tpResult == 2) this._toupiaoSuccess = true;
                     }
                 }
                 else if (battleInfo instanceof gamecomponent.object.BattleInfoVoting)//投票
                 {
                     if (this._battleIndex < i) {
                         this._battleIndex = i;
-                        (this._viewUI.view_tp as TouPiaoJieSanPage).onBattleUpdate(battleInfo);
+                        this._toupiaoMgr.onBattleUpdate(battleInfo);
                     }
                 }
             }
@@ -1081,6 +1084,13 @@ module gamerniuniu.page {
                 this._viewUI.box_matchPoint.visible = false;
             }
             this._isPlaying = this._curStatus >= MAP_STATUS.PLAY_STATUS_GAME_SHUFFLE && this._curStatus < MAP_STATUS.PLAY_STATUS_SHOW_GAME;
+            this._viewUI.btn_dismiss.skin = this._isPlaying || this._niuStory.isCardRoomMaster() ? PathGameTongyong.ui_tongyong_general + "btn_js.png" : PathGameTongyong.ui_tongyong_general + "btn_fh1.png";
+            this._viewUI.btn_dismiss.tag = this._isPlaying || this._niuStory.isCardRoomMaster() ? 2 : 1;
+            //游戏开始后初始化投票组件
+            if (!this._toupiaoMgr && this._curStatus > MAP_STATUS.PLAY_STATUS_CARDROOM_WAIT) {
+                this._toupiaoMgr = TouPiaoMgr.ins;
+                this._toupiaoMgr.initUI(this._viewUI.view_tp, this._niuMapInfo, this.getUnitCount(), RniuniuPageDef.GAME_NAME);
+            }
             //房卡按钮屏蔽
             this._viewUI.view_card.visible = this._curStatus == MAP_STATUS.PLAY_STATUS_CARDROOM_CREATED || this._curStatus == MAP_STATUS.PLAY_STATUS_CARDROOM_WAIT;
             this._viewUI.text_cardroomid.visible = this._curStatus == MAP_STATUS.PLAY_STATUS_CARDROOM_CREATED || this._curStatus == MAP_STATUS.PLAY_STATUS_CARDROOM_WAIT;
@@ -1185,17 +1195,8 @@ module gamerniuniu.page {
                     this._niuStory.isReConnected = false;
                     break;
                 case MAP_STATUS.PLAY_STATUS_SHOW_GAME:// 本局展示阶段
-                    if (this._niuMapInfo.GetRound() == this._niuMapInfo.GetCardRoomGameNumber()) {
-                        this.openCardSettlePage();
-                    }
+                    this.openCardSettlePage();
                     this._pageHandle.pushClose({ id: TongyongPageDef.PAGE_TONGYONG_ZJTS, parent: this._game.uiRoot.HUD });
-                    if (this._game.sceneObjectMgr.mainPlayer.playerInfo.money < this._room_config[1]) {
-                        TongyongPageDef.ins.alertRecharge(StringU.substitute("老板，您的金币少于{0}哦~\n补充点金币去大杀四方吧~", this._room_config[1]), () => {
-                            this._game.uiRoot.general.open(DatingPageDef.PAGE_CHONGZHI);
-                        }, () => {
-                        }, true, TongyongPageDef.TIPS_SKIN_STR["cz"]);
-                    }
-
                     break;
             }
 
@@ -1255,7 +1256,7 @@ module gamerniuniu.page {
                 }
             }
             infoTemps.push(this._niuMapInfo.GetRound());
-            infoTemps.push(this._niuMapInfo.GetCardRoomGameNumber());
+            infoTemps.push(this._toupiaoSuccess ? this._niuMapInfo.GetRound() : this._niuMapInfo.GetCardRoomGameNumber());
             infoTemps.push(this._niuMapInfo.GetCountDown());
             infoTemps.push(temps);
             this._pageHandle.pushOpen({ id: RniuniuPageDef.PAGE_NIUNIU_CARDROOM_SETTLE, dataSource: infoTemps, parent: this._game.uiRoot.HUD });
@@ -1309,7 +1310,6 @@ module gamerniuniu.page {
                 case this._viewUI.btn_dismiss://返回
                     if (this._viewUI.btn_dismiss.tag == 1) {
                         //不是房主 
-                        if (!this.canEndCardGame()) return;
                         if (this._niuStory.isCardRoomMaster()) {
                             this.masterDismissCardGame();
                             return;
@@ -1481,7 +1481,6 @@ module gamerniuniu.page {
             this._viewUI.paixie.ani_chupai.gotoAndStop(0);
             this._viewUI.box_menu.visible = false;
             this._viewUI.box_menu.zOrder = 99;
-            this._viewUI.view_tp.visible = false;
             this._viewUI.box_dizhu.visible = false;
 
             this._playerList = [];
@@ -1581,7 +1580,6 @@ module gamerniuniu.page {
             if (this._viewUI) {
                 this._viewUI.btn_spread.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.btn_cardType.off(LEvent.CLICK, this, this.onBtnClickWithTween);
-                // this._viewUI.btn_back.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.btn_rule.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.btn_chongzhi.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.btn_set.off(LEvent.CLICK, this, this.onBtnClickWithTween);
@@ -1620,6 +1618,10 @@ module gamerniuniu.page {
                 this._game.qifuMgr.off(QiFuMgr.QIFU_FLY, this, this.qifuFly);
                 this._viewUI.xipai.ani_xipai.off(LEvent.COMPLETE, this, this.onWashCardOver);
                 this._game.mainScene.off(SceneOperator.AVATAR_MOUSE_CLICK_HIT, this, this.onUpdatePoint);
+                if (this._toupiaoMgr) {
+                    this._toupiaoMgr.clear(true);
+                    this._toupiaoMgr = null;
+                }
                 if (this._niuMgr) {
                     this._niuMgr.off(RniuniuMgr.DEAL_OVER, this, this.onUpdateAniDeal);
                 }
@@ -1633,7 +1635,6 @@ module gamerniuniu.page {
                 this._game.stopMusic();
                 this._kuangView && this._kuangView.removeSelf();
                 this.clearBeiClip();
-                (this._viewUI.view_tp as TouPiaoJieSanPage).destroy();
             }
             super.close();
         }

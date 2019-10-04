@@ -42,7 +42,6 @@ module gamerniuniu.manager {
 		private _isShowOver: boolean = false;
 		private _isReKaiPai: boolean = true;
 		private _isReconnect: boolean = true;
-		private _totalUnitCount: number = 5;	// 玩家数量
 
 		constructor(game: Game) {
 			super(game)
@@ -79,14 +78,6 @@ module gamerniuniu.manager {
 
 		set isShowOver(v) {
 			this._isShowOver = v;
-		}
-
-		get totalUnitCount() {
-			return this._totalUnitCount;
-		}
-
-		set totalUnitCount(v: number) {
-			this._totalUnitCount = v;
 		}
 
 		//对牌进行排序

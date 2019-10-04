@@ -37,6 +37,7 @@ module gamerniuniu.page {
 			this._viewUI.box_end.visible = this.dataSource[0] == this.dataSource[1];
 			this._viewUI.box_xinxi.visible = !this._viewUI.box_end.visible;
 			this._viewUI.txt_jushu.text = this.dataSource[0] + "/" + this.dataSource[1]
+			this._viewUI.txt_total.text = this.dataSource[1].toString();
 			this._viewUI.btn_create_room.on(LEvent.CLICK, this, this.onBtnClickWithTween);
 		}
 
