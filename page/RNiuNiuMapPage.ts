@@ -234,18 +234,21 @@ module gamerniuniu.page {
             if (!mainUnit) return;
             if (this._isPlaying) {
                 if (!this._toupiaoMgr) return;
+                //是否成功解散了
+                if (this._toupiaoMgr.touPiaoResult) {
+                    this._game.showTips("解散投票通过，本局结束后房间解散");
+                    return;
+                }
                 //是否在投票中
                 if (this._toupiaoMgr.isTouPiaoing) {
                     this._game.showTips("已发起投票，请等待投票结果");
                     return;
-                } else {
-                    //在游戏中 发起投票选项
-                    TongyongPageDef.ins.alertRecharge(StringU.substitute("牌局尚未结束，需发起投票，<span color='{0}'>{1}</span>方可解散。", TeaStyle.COLOR_GREEN, "全员同意"), () => {
-                        //发起投票
-                        this._game.network.call_rniuniu_vote(1);
-                    }, null, true, TongyongPageDef.TIPS_SKIN_STR["fqtq"], TongyongPageDef.TIPS_SKIN_STR["title_ts"]);
                 }
-
+                //在游戏中 发起投票选项
+                TongyongPageDef.ins.alertRecharge(StringU.substitute("牌局尚未结束，需发起投票，<span color='{0}'>{1}</span>方可解散。", TeaStyle.COLOR_GREEN, "全员同意"), () => {
+                    //发起投票
+                    this._game.network.call_rniuniu_vote(1);
+                }, null, true, TongyongPageDef.TIPS_SKIN_STR["fqtq"], TongyongPageDef.TIPS_SKIN_STR["title_ts"]);
             } else {
                 //不在游戏中
                 if (!this._niuStory.isCardRoomMaster()) {
