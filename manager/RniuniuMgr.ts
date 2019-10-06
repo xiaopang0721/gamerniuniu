@@ -38,22 +38,12 @@ module gamerniuniu.manager {
 
 		private _bankerIndex: number;//庄家位置
 		private _unitIndexOnTable: Array<number>;//精灵位置
-		private _offlineUnit: UnitOffline;//假精灵信息
 		private _isShowOver: boolean = false;
 		private _isReKaiPai: boolean = true;
 		private _isReconnect: boolean = true;
 
 		constructor(game: Game) {
 			super(game)
-		}
-
-		get offlineUnit() {
-			return this._offlineUnit;
-		}
-
-		set offlineUnit(v) {
-			this._offlineUnit = v;
-			this.event(RniuniuMgr.MAPINFO_OFFLINE)
 		}
 
 		get isReconnect() {
@@ -437,6 +427,15 @@ module gamerniuniu.manager {
 				card.toggleDistance = 0;
 				card.yipai();
 				card.gaipai();
+			}
+		}
+
+		//拼牌错误
+		pinpaicuowu() {
+			for (let i: number = 0; i < 5; i++) {
+				let card = this._cards[i];
+				if (!card) return;
+				card.toggle = false;
 			}
 		}
 

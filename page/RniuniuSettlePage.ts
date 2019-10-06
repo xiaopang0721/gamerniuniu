@@ -61,6 +61,7 @@ module gamerniuniu.page {
 		private _endTime: number;
 		deltaUpdate(): void {
 			if (!this._viewUI) return;
+			if (!this._endTime) return;
 			let curTime = this._game.sync.serverTimeBys;
 			let time = Math.floor(this._endTime - curTime) + 1;
 			if (time > 0) {
