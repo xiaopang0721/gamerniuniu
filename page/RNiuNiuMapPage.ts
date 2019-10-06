@@ -58,7 +58,7 @@ module gamerniuniu.page {
         constructor(v: Game, onOpenFunc?: Function, onCloseFunc?: Function) {
             super(v, onOpenFunc, onCloseFunc);
             this._isNeedDuang = false;
-            this._delta = 1000;
+            this._delta = 500;
             this._asset = [
                 PathGameTongyong.atlas_game_ui_tongyong + "hud.atlas",
                 PathGameTongyong.atlas_game_ui_tongyong + "pai.atlas",
@@ -226,6 +226,8 @@ module gamerniuniu.page {
             this._viewUI.view_card.btn_start.visible = isRoomMaster;
             this._viewUI.btn_dismiss.skin = isRoomMaster ? PathGameTongyong.ui_tongyong_general + "btn_js.png" : PathGameTongyong.ui_tongyong_general + "btn_fh1.png";
             this._viewUI.btn_dismiss.tag = isRoomMaster ? 2 : 1;
+            this._viewUI.box_tips.visible = !isRoomMaster;
+            this._viewUI.txt_tips.text = "等待房主开始游戏...";
         }
 
         // 房卡模式解散游戏,是否需要房主限制
@@ -257,7 +259,7 @@ module gamerniuniu.page {
                     }, true, TongyongPageDef.TIPS_SKIN_STR["qd"]);
                 } else {
                     if (!this._isGameEnd) {
-                        TongyongPageDef.ins.alertRecharge("游戏未开始，解散房间不会扣除金币！\n是否解散房间？", () => {
+                        TongyongPageDef.ins.alertRecharge("游戏未开始，解散不会扣除房费！\n是否解散房间？", () => {
                             this._niuStory.endRoomCardGame(mainUnit.GetIndex(), this._niuMapInfo.GetCardRoomId());
                             this._game.sceneObjectMgr.leaveStory();
                         }, null, true, TongyongPageDef.TIPS_SKIN_STR["js"], TongyongPageDef.TIPS_SKIN_STR["title_ts"], null, TongyongPageDef.TIPS_SKIN_STR["btn_red"]);
@@ -307,7 +309,7 @@ module gamerniuniu.page {
                 let unit: Unit = unitObj.unit;
                 //欢迎进场,不能是自己,且没播过，且有名字
                 if (this._game.sceneObjectMgr.mainUnit != unit && !unitObj.isPlay && name) {
-                    this._game.showTips(StringU.substitute("欢迎{0}加入房间", name));
+                    this._game.showTips(StringU.substitute("欢迎{0}加入房间", HtmlFormat.addHtmlColor(name.toString(), TeaStyle.COLOR_WHITE)));
                     unitObj.isPlay = true;
                 }
             }
@@ -1334,7 +1336,7 @@ module gamerniuniu.page {
                     this._viewUI.btn_tanpai.visible = false;
                     this._viewUI.box_xinshou.visible = false;
                     this._viewUI.box_tips.visible = true;
-                    this._viewUI.txt_tips.text = "等待其他玩家拼牌";
+                    this._viewUI.txt_tips.text = "等待其他玩家拼牌...";
                     break;
                 case this._viewUI.btn_zhanji://战绩
                     this._game.uiRoot.general.open(TongyongPageDef.PAGE_TONGYONG_RECORD, (page) => {
@@ -1371,49 +1373,49 @@ module gamerniuniu.page {
                     this._game.network.call_rniuniu_banker(0);
                     this._viewUI.box_bankerRate.visible = false;
                     this._viewUI.box_tips.visible = true;
-                    this._viewUI.txt_tips.text = "等待其他玩家抢庄";
+                    this._viewUI.txt_tips.text = "等待其他玩家抢庄...";
                     break;
                 case this._viewUI.btn_bankerRate1://抢庄倍数1
                     this._game.network.call_rniuniu_banker(1);
                     this._viewUI.box_bankerRate.visible = false;
                     this._viewUI.box_tips.visible = true;
-                    this._viewUI.txt_tips.text = "等待其他玩家抢庄";
+                    this._viewUI.txt_tips.text = "等待其他玩家抢庄...";
                     break;
                 case this._viewUI.btn_bankerRate2://抢庄倍数2
                     this._game.network.call_rniuniu_banker(2);
                     this._viewUI.box_bankerRate.visible = false;
                     this._viewUI.box_tips.visible = true;
-                    this._viewUI.txt_tips.text = "等待其他玩家抢庄";
+                    this._viewUI.txt_tips.text = "等待其他玩家抢庄...";
                     break;
                 case this._viewUI.btn_bankerRate3://抢庄倍数3
                     this._game.network.call_rniuniu_banker(3);
                     this._viewUI.box_bankerRate.visible = false;
                     this._viewUI.box_tips.visible = true;
-                    this._viewUI.txt_tips.text = "等待其他玩家抢庄";
+                    this._viewUI.txt_tips.text = "等待其他玩家抢庄...";
                     break;
                 case this._viewUI.btn_betRate1://下注倍数1
                     this._game.network.call_rniuniu_bet(this._betList[0]);
                     this._viewUI.box_betRate.visible = false;
                     this._viewUI.box_tips.visible = true;
-                    this._viewUI.txt_tips.text = "等待其他玩家下注";
+                    this._viewUI.txt_tips.text = "等待其他玩家下注...";
                     break;
                 case this._viewUI.btn_betRate2://下注倍数2
                     this._game.network.call_rniuniu_bet(this._betList[1]);
                     this._viewUI.box_betRate.visible = false;
                     this._viewUI.box_tips.visible = true;
-                    this._viewUI.txt_tips.text = "等待其他玩家下注";
+                    this._viewUI.txt_tips.text = "等待其他玩家下注...";
                     break;
                 case this._viewUI.btn_betRate3://下注倍数3
                     this._game.network.call_rniuniu_bet(this._betList[2]);
                     this._viewUI.box_betRate.visible = false;
                     this._viewUI.box_tips.visible = true;
-                    this._viewUI.txt_tips.text = "等待其他玩家下注";
+                    this._viewUI.txt_tips.text = "等待其他玩家下注...";
                     break;
                 case this._viewUI.btn_betRate4://下注倍数4
                     this._game.network.call_rniuniu_bet(this._betList[3]);
                     this._viewUI.box_betRate.visible = false;
                     this._viewUI.box_tips.visible = true;
-                    this._viewUI.txt_tips.text = "等待其他玩家下注";
+                    this._viewUI.txt_tips.text = "等待其他玩家下注...";
                     break;
                 case this._viewUI.view_card.btn_invite://房卡邀请
                     // 微信邀请玩家参与房卡游戏
