@@ -67,7 +67,7 @@ module gamerniuniu.story {
 			if (!info) return;
 			this.onMapInfoChange();
 			this._game.uiRoot.closeAll();
-			this._game.uiRoot.HUD.open(RniuniuPageDef.PAGE_NIUNIU_MAP);
+			this._game.uiRoot.HUD.open(RniuniuPageDef.PAGE_RNIUNIU_MAP);
 		}
 
 		private onMapInfoChange(): void {
