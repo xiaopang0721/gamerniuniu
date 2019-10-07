@@ -1261,6 +1261,9 @@ module gamerniuniu.page {
                     break;
                 case MAP_STATUS.PLAY_STATUS_SHOW_GAME:// 本局展示阶段
                     this.openCardSettlePage();
+                    //游戏结束后解散都改为返回，点击直接回到大厅
+                    this._viewUI.btn_dismiss.skin = PathGameTongyong.ui_tongyong_general + "btn_fh1.png";
+                    this._viewUI.btn_dismiss.tag = 1;
                     this._pageHandle.pushClose({ id: TongyongPageDef.PAGE_TONGYONG_ZJTS, parent: this._game.uiRoot.HUD });
                     this._pageHandle.pushClose({ id: TongyongPageDef.PAGE_TONGYONG_ZJTP, parent: this._game.uiRoot.HUD });
                     break;
@@ -1377,11 +1380,6 @@ module gamerniuniu.page {
                     break;
                 case this._viewUI.btn_dismiss://返回
                     if (this._viewUI.btn_dismiss.tag == 1) {
-                        //不是房主 
-                        if (this._niuStory.isCardRoomMaster()) {
-                            this.masterDismissCardGame();
-                            return;
-                        }
                         this.clearClips();
                         this.resetData();
                         this.clearMapInfoListen();
