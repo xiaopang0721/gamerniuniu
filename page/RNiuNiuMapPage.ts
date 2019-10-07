@@ -262,6 +262,12 @@ module gamerniuniu.page {
                     this._game.showTips("已发起投票，请等待投票结果");
                     return;
                 }
+                //下次发起投票的时间
+                let nextTime = Math.floor(this._niuMapInfo.GetTouPiaoTime() + 60 - this._game.sync.serverTimeBys);
+                if (nextTime > 0) {
+                    this._game.showTips(StringU.substitute("请在{0}s之后再发起投票", nextTime));
+                    return;
+                }
                 //在游戏中 发起投票选项
                 TongyongPageDef.ins.alertRecharge(StringU.substitute("牌局尚未结束，需发起投票，<span color='{0}'>{1}</span>方可解散。", TeaStyle.COLOR_GREEN, "全员同意"), () => {
                     //发起投票
@@ -1453,7 +1459,7 @@ module gamerniuniu.page {
                         this._game.network.call_get_roomcard_share(RniuniuPageDef.GAME_NAME);
                     }
                     break;
-                case this._viewUI.view_card.btn_start:////房卡开始
+                case this._viewUI.view_card.btn_start://房卡开始
                     this.setCardGameStart();
                     break;
                 default:
