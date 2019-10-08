@@ -780,7 +780,7 @@ module gamerniuniu.page {
                 {
                     if (this._battleIndex < i) {
                         this._battleIndex = i;
-                        this._toupiaoMgr.onBattleUpdate(battleInfo);
+                        this._toupiaoMgr && this._toupiaoMgr.onBattleUpdate(battleInfo);
                         if (battleInfo.tpResult == 1) this._toupiaoSuccess = true;
                     }
                 }
@@ -788,7 +788,7 @@ module gamerniuniu.page {
                 {
                     if (this._battleIndex < i) {
                         this._battleIndex = i;
-                        this._toupiaoMgr.onBattleUpdate(battleInfo);
+                        this._toupiaoMgr && this._toupiaoMgr.onBattleUpdate(battleInfo);
                     }
                 }
             }
