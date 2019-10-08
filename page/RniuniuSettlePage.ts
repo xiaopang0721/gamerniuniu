@@ -65,7 +65,7 @@ module gamerniuniu.page {
 			if (!this._viewUI) return;
 			if (!this._endTime) return;
 			let curTime = this._game.sync.serverTimeBys;
-			let time = Math.floor(this._endTime - curTime) + 1;
+			let time = Math.floor(this._endTime - curTime);
 			if (time > 0) {
 				this._viewUI.txt_daojishi.text = time + "s";
 			} else {
