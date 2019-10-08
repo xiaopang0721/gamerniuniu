@@ -89,11 +89,13 @@ module gamerniuniu.data {
 						battleObj.push({ type: 2, title: "开始摊牌" });
 					}
 					let desc: string = "[" + RniuniuMapInfo.CARDTYPE[info.CardType - 1] + "]";
-					let cards = [];
+					let isniu: boolean = info.CardType - 1 > 0;
+					let cards = this.sortCardsToNiu(info.Cards);
+					let newcards = [];
 					for (let j: number = 0; j < info.Cards.length; j++) {
-						cards.push(info.Cards[j].GetVal());
+						newcards.push(info.Cards[j].GetVal());
 					}
-					battleObj.push({ type: 4, name: name, desc: desc, cards: cards });
+					battleObj.push({ type: 4, name: name, desc: desc, cards: newcards, isniu: isniu });
 				} else if (info instanceof gamecomponent.object.BattleInfoSettle) {//结算信息
 					if (!this._addSettle) {
 						this._addSettle = true;
@@ -139,6 +141,61 @@ module gamerniuniu.data {
 				if (user.name) num++;
 			}
 			return num
+		}
+
+		//把牌整理成牛牌顺序
+		sortCardsToNiu(cards): Array<RniuniuData> {
+			let lave = 0; //余数
+			let index1 = 0;
+			let index2 = 0;
+			let newCards = cards;
+			for (let i: number = 0; i < newCards.length; i++) {
+				lave = lave + newCards[i].GetCount();
+			}
+			lave = lave % 10;
+			for (let i: number = 0; i < newCards.length - 1; i++) {
+				for (let j: number = i + 1; j < newCards.length; j++) {
+					if ((newCards[i].GetCount() + newCards[j].GetCount()) % 10 == lave) {
+						index1 = i;
+						index2 = j;
+					}
+				}
+			}
+			if (index1 + index2 == 0) return newCards;
+			if (index1 < 3 && index2 < 3) {
+				let a = newCards[3];
+				newCards[3] = newCards[index1];
+				newCards[index1] = a;
+				a = newCards[4];
+				newCards[4] = newCards[index2];
+				newCards[index2] = a;
+			}
+			if (index1 < 3 && index2 >= 3) {
+				let index = 0;
+				if (index2 == 3) {
+					index = 4;
+				}
+				else if (index2 == 4) {
+					index = 3;
+				}
+				let a = newCards[index];
+				newCards[index] = newCards[index1];
+				newCards[index1] = a;
+			}
+			if (index2 < 3 && index1 >= 3) {
+				let index = 0;
+				if (index1 == 3) {
+					index = 4;
+				}
+				else if (index1 == 4) {
+					index = 3;
+				}
+				let a = newCards[index];
+				newCards[index] = newCards[index2];
+				newCards[index2] = a;
+			}
+
+			return newCards;
 		}
 	}
 }
