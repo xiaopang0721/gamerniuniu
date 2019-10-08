@@ -442,7 +442,7 @@ module gamerniuniu.page {
                         }
                     }
                     //头像框
-                    this._playerList[index].view_icon.img_txk.visible = PathGameTongyong.ui_tongyong_touxiang + "tu_txk" + (unit.GetHeadKuangImg() ? unit.GetHeadKuangImg() : 0) + ".png";
+                    this._playerList[index].view_icon.img_txk.skin = this._game.datingGame.getTouXiangKuangUrl(unit.GetHeadKuangImg(), 2);
 
                     //祈福成功 头像上就有动画
                     if (qifu_index && posIdx == qifu_index) {
