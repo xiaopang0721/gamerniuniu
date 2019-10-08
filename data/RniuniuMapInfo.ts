@@ -44,50 +44,83 @@ module gamerniuniu.data {
 			}
 		}
 		//牌型
-		static cardType = ['没牛', '牛一', '牛二', '牛三', '牛四', '牛五', '牛六', '牛七', '牛八', '牛九', '牛牛', '四花牛', '五花牛', '四炸', '五小牛']
-		private _settleCount: number = 0;//结算计数，方便房卡不同局分割开
-		public getBattleInfoToString(): string {
-			let str: string = "";
+		static CARDTYPE = ['没牛', '牛一', '牛二', '牛三', '牛四', '牛五', '牛六', '牛七', '牛八', '牛九', '牛牛', '四花牛', '五花牛', '四炸', '五小牛'];
+		private _settleCount: number = 0;//结算计数，方便重置标识
+		private _roundCount: number = 1;//回合计数，方便房卡不同局分割开
+		private _addRound: boolean = false;//回合标题已增加
+		private _addBanker: boolean = false;//抢庄标题已增加
+		private _addBet: boolean = false;//下注标题已增加
+		private _addShowCards: boolean = false;//摊牌标题已增加
+		private _addSettle: boolean = false;//结算标题已增加
+		public getBattleInfoToObj(): any {
+			let battleObj: any[] = [];
 			for (let i = 0; i < this._battleInfoMgr.info.length; i++) {
-				let battleInfo = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoBase;
-				let name = this.GetPlayerNameFromSeat(battleInfo.SeatIndex)
-				if (battleInfo.Type == 12) {
-					let info = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoBanker;
-					let newString: string;
+				let info = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoBase;
+				let name = this.GetPlayerNameFromSeat(info.SeatIndex) + ":";
+				if (!this._addRound) {//局数信息
+					this._addRound = true;
+					battleObj.push({ type: 1, title: StringU.substitute("第{0}局", this._roundCount) });
+				}
+				if (info instanceof gamecomponent.object.BattleInfoBanker) {//抢庄信息
+					if (!this._addBanker) {
+						this._addBanker = true;
+						battleObj.push({ type: 2, title: "开始抢庄" });
+					}
+					let desc: string;
 					if (info.BetVal == 0) {
-						newString = name + "：" + "不抢庄";
+						desc = "不抢庄";
 					} else {
-						newString = name + "：" + "抢庄" + info.BetVal + "倍";
+						desc = "抢庄" + HtmlFormat.addHtmlColor(info.BetVal.toString(), TeaStyle.COLOR_GREEN) + "倍";
 					}
-					if (str == "") {
-						str = newString;
+					battleObj.push({ type: 6, name: name, desc: desc });
+				} else if (info instanceof gamecomponent.object.BattleInfoBetRate) {//庄家信息
+					let desc: string = "抢得" + HtmlFormat.addHtmlColor("[庄家]", TeaStyle.COLOR_GREEN);
+					battleObj.push({ type: 6, name: name, desc: desc });
+				} else if (info instanceof gamecomponent.object.BattleInfoBet) {//下注信息
+					if (!this._addBet) {
+						this._addBet = true;
+						battleObj.push({ type: 2, title: "开始下注" });
+					}
+					let desc: string = "下注" + HtmlFormat.addHtmlColor(info.BetVal.toString(), TeaStyle.COLOR_GREEN) + "倍";
+					battleObj.push({ type: 6, name: name, desc: desc });
+				} else if (info instanceof gamecomponent.object.BattleInfoPlayCard) {//摊牌信息
+					if (!this._addShowCards) {
+						this._addShowCards = true;
+						battleObj.push({ type: 2, title: "开始摊牌" });
+					}
+					let desc: string = "[" + RniuniuMapInfo.CARDTYPE[info.CardType - 1] + "]";
+					let cards = [];
+					for (let j: number = 0; j < info.Cards.length; j++) {
+						cards.push(info.Cards[j].GetVal());
+					}
+					battleObj.push({ type: 4, name: name, desc: desc, cards: cards });
+				} else if (info instanceof gamecomponent.object.BattleInfoSettle) {//结算信息
+					if (!this._addSettle) {
+						this._addSettle = true;
+						battleObj.push({ type: 2, title: "开始结算" });
+					}
+					let desc: string = "";
+					if (info.SettleVal > 0) {
+						desc = "积分 " + HtmlFormat.addHtmlColor("+" + info.SettleVal.toString(), TeaStyle.COLOR_GREEN)
+					} else if (info.SettleVal < 0) {
+						desc = "积分 " + HtmlFormat.addHtmlColor(info.SettleVal.toString(), TeaStyle.COLOR_RED)
 					} else {
-						str = str + "#" + newString;
+						desc = "积分 +" + info.SettleVal;
 					}
-				} else if (battleInfo.Type == 13) {
-					let info = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoBetRate;
-					let newString = "庄家是：" + name;
-					str = str + "#" + newString;
-				} else if (battleInfo.Type == 2) {
-					let info = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoBet;
-					let newString = name + "：" + "下注" + info.BetVal + "倍";
-					str = str + "#" + newString;
-				} else if (battleInfo.Type == 3) {
-					let info = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoPlayCard<gamecomponent.object.PlayingPuKeCard>;
-					let newString = name + "：" + "摊牌，牌型是：" + RniuniuMapInfo.cardType[info.CardType - 1];
-					str = str + "#" + newString;
-				} else if (battleInfo.Type == 11) {
-					let info = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoSettle;
-					let newString = name + "盈利：" + info.SettleVal;
+					battleObj.push({ type: 6, name: name, desc: desc });
 					this._settleCount++;
-					str = str + "#" + newString;
 					if (this._settleCount == this.GetPlayerNumFromSeat()) {
-						str = str + "#";
+						this._roundCount++;//下一回合计数
+						this._addRound = false;
+						this._addBanker = false;
+						this._addBet = false;
+						this._addShowCards = false;
+						this._addSettle = false;
 						this._settleCount = 0;
 					}
 				}
 			}
-			return str;
+			return battleObj;
 		}
 
 		//通过座位取玩家名字
