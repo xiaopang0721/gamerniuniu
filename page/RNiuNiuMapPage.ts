@@ -399,7 +399,7 @@ module gamerniuniu.page {
                 this._viewUI.view0.visible = true;
                 this._viewUI.view0.view_icon.txt_name.text = getMainPlayerName(mPlayerInfo.nickname);
                 this._viewUI.view0.view_icon.img_icon.skin = this._game.datingGame.getHeadUrl(mPlayerInfo.headimg, 2);
-                this._viewUI.view0.view_icon.img_qifu.visible = mPlayerInfo.qifu_endtime > this._game.sync.serverTimeBys;
+                this._viewUI.view0.view_icon.img_qifu.visible = this._game.datingGame.getIsHaveQiFu(mPlayer);
                 //头像框
                 this._viewUI.view0.view_icon.img_txk.skin = this._game.datingGame.getTouXiangKuangUrl(mPlayerInfo.headKuang, 2);
                 this._viewUI.view0.view_icon.txt_money.text = EnumToString.getPointBackNum(mPlayerInfo.money, 2).toString();
@@ -451,21 +451,15 @@ module gamerniuniu.page {
                         this.playTween(this._playerList[index].view_icon.qifu_type, qifu_index);
                     }
                     //时间戳变化 才加上祈福标志
-                    if (unit.GetQiFuEndTime() > this._game.sync.serverTimeBys) {
+                    if (this._game.datingGame.getIsHaveQiFu(unit)) {
                         if (qifu_index && posIdx == qifu_index) {
                             Laya.timer.once(2500, this, () => {
                                 this._playerList[index].view_icon.img_qifu.visible = true;
                                 this._playerList[index].view_icon.img_icon.skin = this._game.datingGame.getHeadUrl(unit.GetHeadImg(), 2);
-                                // if (this._playerList[index].view_icon.img_qifu.visible && unit.GetQiFuType()) {
-                                //     this._playerList[index].view_icon.img_icon.skin = PathGameTongyong.ui_tongyong_touxiang + "head_" + this._nameStrInfo[unit.GetQiFuType() - 1] + ".png";
-                                // }
                             })
                         } else {
                             this._playerList[index].view_icon.img_qifu.visible = true;
                             this._playerList[index].view_icon.img_icon.skin = this._game.datingGame.getHeadUrl(unit.GetHeadImg(), 2);
-                            // if (this._playerList[index].view_icon.img_qifu.visible && unit.GetQiFuType()) {
-                            //     this._playerList[index].view_icon.img_icon.skin = PathGameTongyong.ui_tongyong_touxiang + "head_" + this._nameStrInfo[unit.GetQiFuType() - 1] + ".png";
-                            // }
                         }
                     } else {
                         this._playerList[index].view_icon.img_qifu.visible = false;
