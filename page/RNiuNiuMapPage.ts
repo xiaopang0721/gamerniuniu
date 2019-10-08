@@ -383,7 +383,7 @@ module gamerniuniu.page {
                     this._viewUI.view0.view_icon.img_icon.skin = PathGameTongyong.ui_tongyong_touxiang + "head_" + this._nameStrInfo[mPlayerInfo.qifu_type - 1] + ".png";
                 }
                 //头像框
-                this._viewUI.view0.view_icon.img_txk.skin = PathGameTongyong.ui_tongyong_touxiang + "tu_txk" + (mPlayerInfo.headKuang ? mPlayerInfo.headKuang : 0) + ".png";
+                this._viewUI.view0.view_icon.img_txk.skin = this._game.datingGame.getTouXiangKuangUrl(mPlayerInfo.headKuang, 2);
                 this._viewUI.view0.view_icon.txt_money.text = EnumToString.getPointBackNum(mPlayerInfo.money, 2).toString();
             }
         }
