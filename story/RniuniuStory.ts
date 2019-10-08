@@ -3,27 +3,28 @@
 */
 module gamerniuniu.story {
 	const enum MAP_STATUS {
-        PLAY_STATUS_GAME_NONE = 0, // 初始化
-        PLAY_STATUS_CARDROOM_CREATED = 1, //房间创建后
-        PLAY_STATUS_CARDROOM_WAIT = 2, //房卡等人中
-        PLAY_STATUS_GAME_SHUFFLE = 3, // 洗牌阶段
-        PLAY_STATUS_GAME_START = 4, // 游戏开始
-        PLAY_STATUS_GET_BANKER = 5, // 开始抢庄
-        PLAY_STATUS_SET_BANKER = 6, // 定庄阶段
-        PLAY_STATUS_BET = 7, // 下注阶段
-        PLAY_STATUS_PUSH_CARD = 8, // 发牌阶段
-        PLAY_STATUS_MATCH_POINT = 9, // 配牛阶段
-        PLAY_STATUS_COMPARE = 10, // 比牌阶段
-        PLAY_STATUS_SETTLE = 11, // 结算阶段
-        PLAY_STATUS_SETTLE_INFO = 12, // 显示结算信息
-        PLAY_STATUS_SHOW_GAME = 13, // 本局展示阶段
-    }
+		PLAY_STATUS_GAME_NONE = 0, // 初始化
+		PLAY_STATUS_CARDROOM_CREATED = 1, //房间创建后
+		PLAY_STATUS_CARDROOM_WAIT = 2, //房卡等人中
+		PLAY_STATUS_GAME_SHUFFLE = 3, // 洗牌阶段
+		PLAY_STATUS_GAME_START = 4, // 游戏开始
+		PLAY_STATUS_GET_BANKER = 5, // 开始抢庄
+		PLAY_STATUS_SET_BANKER = 6, // 定庄阶段
+		PLAY_STATUS_BET = 7, // 下注阶段
+		PLAY_STATUS_PUSH_CARD = 8, // 发牌阶段
+		PLAY_STATUS_MATCH_POINT = 9, // 配牛阶段
+		PLAY_STATUS_COMPARE = 10, // 比牌阶段
+		PLAY_STATUS_SETTLE = 11, // 结算阶段
+		PLAY_STATUS_SETTLE_INFO = 12, // 显示结算信息
+		PLAY_STATUS_SHOW_GAME = 13, // 本局展示阶段
+	}
 	export class RniuniuStory extends gamecomponent.story.StoryRoomCardBase {
 		private _niuMgr: RniuniuMgr;
 		private _isFaPai: number = 0;
 		private _bankerIndex: number;
 		private _niuMapInfo: RniuniuMapInfo;
 		private _curStatus: number;
+		private _isGaiPai: boolean = false;
 
 		constructor(v: Game, mapid: string, maplv: number, dataSource: any) {
 			super(v, mapid, maplv, dataSource);
@@ -44,6 +45,14 @@ module gamerniuniu.story {
 
 		get isFaPai() {
 			return this._isFaPai;
+		}
+
+		get isGaiPai() {
+			return this._isGaiPai;
+		}
+
+		set isGaiPai(v) {
+			this._isGaiPai = v;
 		}
 
 		init() {
@@ -67,7 +76,7 @@ module gamerniuniu.story {
 			if (!info) return;
 			this.onMapInfoChange();
 			this._game.uiRoot.closeAll();
-			this._game.uiRoot.HUD.open(RniuniuPageDef.PAGE_NIUNIU_MAP);
+			this._game.uiRoot.HUD.open(RniuniuPageDef.PAGE_RNIUNIU_MAP);
 		}
 
 		private onMapInfoChange(): void {
@@ -128,17 +137,19 @@ module gamerniuniu.story {
 					this._niuMgr.isReKaiPai = false;
 					break;
 				case MAP_STATUS.PLAY_STATUS_COMPARE:// 比牌阶段
-					this._niuMgr.gaipai();
+					if (!this.isGaiPai) {
+						this._niuMgr.gaipai();
+						this.isGaiPai = true;
+					}
 					this._niuMgr.isShowOver = false;
 					break;
 				case MAP_STATUS.PLAY_STATUS_SETTLE:// 结算阶段
 
 					break;
 				case MAP_STATUS.PLAY_STATUS_SETTLE_INFO:// 显示结算信息
-
+					this.isGaiPai = false;
 					break;
 				case MAP_STATUS.PLAY_STATUS_SHOW_GAME:// 本局展示阶段
-
 					break;
 			}
 		}

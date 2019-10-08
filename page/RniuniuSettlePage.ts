@@ -45,7 +45,9 @@ module gamerniuniu.page {
 		protected onBtnTweenEnd(e: LEvent, target: any) {
 			switch (target) {
 				case this._viewUI.btn_create_room:
-					this._game.uiRoot.general.open(RniuniuPageDef.PAGE_NIUNIU_CREATE_CARDROOM);
+					this._game.uiRoot.general.open(DatingPageDef.PAGE_CREATE_CARD_ROOM, (page: gamedating.page.CreateCardRoomBase) => {
+						page.game_id = RniuniuPageDef.GAME_NAME;
+					});
 					this.close();
 					break;
 			}
