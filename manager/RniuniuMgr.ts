@@ -419,6 +419,17 @@ module gamerniuniu.manager {
 			}
 		}
 
+		//点过了几张牌
+		toggleCount(): number {
+			let count = 0;
+			for (let i: number = 0; i < 5; i++) {
+				let card = this._cards[i];
+				if (!card) return 0;
+				if (card.toggle) count++;
+			}
+			return count;
+		}
+
 		//盖牌
 		gaipai() {
 			for (let i: number = 0; i < 5; i++) {

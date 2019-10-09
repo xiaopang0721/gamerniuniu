@@ -641,6 +641,10 @@ module gamerniuniu.page {
             if (hitAvatar.card.GetOwnerIdx() != this._game.sceneObjectMgr.mainUnit.GetIndex()) {
                 return;
             }
+            if (this._niuMgr.toggleCount() > 3) {//超过3张 不再顶起
+                hitAvatar.card.toggle = false;
+                return;
+            }
             let cardCount = hitAvatar.card.GetCount();
             if (!hitAvatar.card._isTouch) {
                 if (this._viewUI.txt_pointTotal.text) {
