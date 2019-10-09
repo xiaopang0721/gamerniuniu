@@ -1502,14 +1502,13 @@ module gamerniuniu.page {
             }
         }
 
-        private _nameStrInfo: string[] = ["xs", "px", "gsy", "gg", "cs", "tdg"];
         private _qifuTypeImgUrl: string;
         private qifuFly(dataSource: any): void {
             if (!dataSource) return;
             let dataInfo = dataSource;
             this._game.qifuMgr.showFlayAni(this._viewUI.view0.view_icon, this._viewUI, dataSource, Handler.create(this, () => {
                 //相对应的玩家精灵做出反应
-                this._qifuTypeImgUrl = StringU.substitute(PathGameTongyong.ui_tongyong_touxiang + "f_{0}2.png", this._nameStrInfo[dataInfo.qf_id - 1]);
+                this._qifuTypeImgUrl = TongyongUtil.getQFTypeImg(dataInfo.qf_id);
                 this.onUpdateUnit(dataInfo.qifu_index);
             }));
         }
