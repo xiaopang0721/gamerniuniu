@@ -641,6 +641,10 @@ module gamerniuniu.page {
             if (hitAvatar.card.GetOwnerIdx() != this._game.sceneObjectMgr.mainUnit.GetIndex()) {
                 return;
             }
+            if (this._niuMgr.toggleCount() > 3) {//超过3张 不再顶起
+                hitAvatar.card.toggle = false;
+                return;
+            }
             let cardCount = hitAvatar.card.GetCount();
             if (!hitAvatar.card._isTouch) {
                 if (this._viewUI.txt_pointTotal.text) {
@@ -1503,11 +1507,11 @@ module gamerniuniu.page {
         private qifuFly(dataSource: any): void {
             if (!dataSource) return;
             let dataInfo = dataSource;
-            this._game.qifuMgr.showFlayAni(this._viewUI.view0.view_icon, this._viewUI, dataSource, (dataInfo) => {
+            this._game.qifuMgr.showFlayAni(this._viewUI.view0.view_icon, this._viewUI, dataSource, Handler.create(this, () => {
                 //相对应的玩家精灵做出反应
                 this._qifuTypeImgUrl = StringU.substitute(PathGameTongyong.ui_tongyong_touxiang + "f_{0}2.png", this._nameStrInfo[dataInfo.qf_id - 1]);
                 this.onUpdateUnit(dataInfo.qifu_index);
-            });
+            }));
         }
 
         protected onOptHandler(optcode: number, msg: any) {

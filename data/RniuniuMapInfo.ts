@@ -45,8 +45,8 @@ module gamerniuniu.data {
 		}
 		//牌型
 		static CARDTYPE = ['没牛', '牛一', '牛二', '牛三', '牛四', '牛五', '牛六', '牛七', '牛八', '牛九', '牛牛', '四花牛', '五花牛', '四炸', '五小牛'];
+		private _roundCount: number;//回合计数，方便房卡不同局分割开
 		private _settleCount: number = 0;//结算计数，方便重置标识
-		private _roundCount: number = 1;//回合计数，方便房卡不同局分割开
 		private _addRound: boolean = false;//回合标题已增加
 		private _addBanker: boolean = false;//抢庄标题已增加
 		private _addBet: boolean = false;//下注标题已增加
@@ -54,9 +54,10 @@ module gamerniuniu.data {
 		private _addSettle: boolean = false;//结算标题已增加
 		public getBattleInfoToObj(): any {
 			let battleObj: any[] = [];
+			this._roundCount = 1;
 			for (let i = 0; i < this._battleInfoMgr.info.length; i++) {
 				let info = this._battleInfoMgr.info[i] as gamecomponent.object.BattleInfoBase;
-				let name = this.GetPlayerNameFromSeat(info.SeatIndex) + ":";
+				let name = this.GetPlayerNameFromSeat(info.SeatIndex) + "：";
 				if (!this._addRound) {//局数信息
 					this._addRound = true;
 					battleObj.push({ type: 1, title: StringU.substitute("第{0}局", this._roundCount) });
@@ -68,21 +69,21 @@ module gamerniuniu.data {
 					}
 					let desc: string;
 					if (info.BetVal == 0) {
-						desc = "不抢庄";
+						desc = name + " 不抢庄";
 					} else {
-						desc = "抢庄" + HtmlFormat.addHtmlColor(info.BetVal.toString(), TeaStyle.COLOR_GREEN) + "倍";
+						desc = name + " 抢庄" + HtmlFormat.addHtmlColor(info.BetVal.toString(), TeaStyle.COLOR_GREEN) + "倍";
 					}
-					battleObj.push({ type: 6, name: name, desc: desc });
+					battleObj.push({ type: 6, desc: desc });
 				} else if (info instanceof gamecomponent.object.BattleInfoBetRate) {//庄家信息
-					let desc: string = "抢得" + HtmlFormat.addHtmlColor("[庄家]", TeaStyle.COLOR_GREEN);
-					battleObj.push({ type: 6, name: name, desc: desc });
+					let desc: string = name + " 抢得" + HtmlFormat.addHtmlColor("[庄家]", TeaStyle.COLOR_GREEN);
+					battleObj.push({ type: 6, desc: desc });
 				} else if (info instanceof gamecomponent.object.BattleInfoBet) {//下注信息
 					if (!this._addBet) {
 						this._addBet = true;
 						battleObj.push({ type: 2, title: "开始下注" });
 					}
-					let desc: string = "下注" + HtmlFormat.addHtmlColor(info.BetVal.toString(), TeaStyle.COLOR_GREEN) + "倍";
-					battleObj.push({ type: 6, name: name, desc: desc });
+					let desc: string = name + " 下注" + HtmlFormat.addHtmlColor(info.BetVal.toString(), TeaStyle.COLOR_GREEN) + "倍";
+					battleObj.push({ type: 6, desc: desc });
 				} else if (info instanceof gamecomponent.object.BattleInfoPlayCard) {//摊牌信息
 					if (!this._addShowCards) {
 						this._addShowCards = true;
@@ -103,13 +104,13 @@ module gamerniuniu.data {
 					}
 					let desc: string = "";
 					if (info.SettleVal > 0) {
-						desc = "积分 " + HtmlFormat.addHtmlColor("+" + info.SettleVal.toString(), TeaStyle.COLOR_GREEN)
+						desc = name + " 积分 " + HtmlFormat.addHtmlColor("+" + info.SettleVal.toString(), TeaStyle.COLOR_GREEN)
 					} else if (info.SettleVal < 0) {
-						desc = "积分 " + HtmlFormat.addHtmlColor(info.SettleVal.toString(), TeaStyle.COLOR_RED)
+						desc = name + " 积分 " + HtmlFormat.addHtmlColor(info.SettleVal.toString(), TeaStyle.COLOR_RED)
 					} else {
-						desc = "积分 +" + info.SettleVal;
+						desc = name + " 积分 +" + info.SettleVal;
 					}
-					battleObj.push({ type: 6, name: name, desc: desc });
+					battleObj.push({ type: 6, desc: desc });
 					this._settleCount++;
 					if (this._settleCount == this.GetPlayerNumFromSeat()) {
 						this._roundCount++;//下一回合计数
