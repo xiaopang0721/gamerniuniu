@@ -35,8 +35,6 @@ module gamerniuniu.page {
 			this._viewUI.panel_wanfa.vScrollBarSkin = "";
 			this._viewUI.panel_wanfa.vScrollBar.autoHide = true;
 			this._viewUI.panel_wanfa.vScrollBar.elasticDistance = 100;
-			//更新滚动条最大滚动数值
-			this._viewUI.panel_wanfa.vScrollBar.max = 820;
 			this._viewUI.btn_tab.selectHandler = Handler.create(this, this.selectHandler, null, false);
 			if (this.dataSource) {
 				this._viewUI.btn_tab.selectedIndex = this.dataSource;
