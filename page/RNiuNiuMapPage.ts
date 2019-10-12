@@ -109,7 +109,6 @@ module gamerniuniu.page {
 
             //所有监听
             this._viewUI.btn_spread.on(LEvent.CLICK, this, this.onBtnClickWithTween);
-            this._viewUI.btn_cardType.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.btn_rule.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.btn_chongzhi.on(LEvent.CLICK, this, this.onBtnClickWithTween);
             this._viewUI.btn_set.on(LEvent.CLICK, this, this.onBtnClickWithTween);
@@ -1338,11 +1337,6 @@ module gamerniuniu.page {
                 case this._viewUI.btn_spread://菜单
                     this.showMenu(true);
                     break;
-                case this._viewUI.btn_cardType://牌型
-                    this._game.uiRoot.general.open(RniuniuPageDef.PAGE_RNIUNIU_RULE, (page: RniuniuRulePage) => {
-                        page.dataSource = 1;
-                    });
-                    break;
                 case this._viewUI.btn_rule://规则
                     this._game.uiRoot.general.open(RniuniuPageDef.PAGE_RNIUNIU_RULE);
                     break;
@@ -1651,7 +1645,6 @@ module gamerniuniu.page {
         public close(): void {
             if (this._viewUI) {
                 this._viewUI.btn_spread.off(LEvent.CLICK, this, this.onBtnClickWithTween);
-                this._viewUI.btn_cardType.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.btn_rule.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.btn_chongzhi.off(LEvent.CLICK, this, this.onBtnClickWithTween);
                 this._viewUI.btn_set.off(LEvent.CLICK, this, this.onBtnClickWithTween);
