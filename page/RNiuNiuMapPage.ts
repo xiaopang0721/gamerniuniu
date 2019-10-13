@@ -1178,7 +1178,7 @@ module gamerniuniu.page {
                     break;
                 case MAP_STATUS.PLAY_STATUS_MATCH_POINT:// 配牛阶段
                     this._niuMgr.isReKaiPai = false;
-                    if (localGetItem("rniuniu") == "0") {
+                    if (!localGetItem("rniuniu") || localGetItem("rniuniu") == "0") {
                         this._viewUI.box_xinshou.visible = true;
                         Laya.timer.once(5000, this, () => {
                             localSetItem("rniuniu", "1");
