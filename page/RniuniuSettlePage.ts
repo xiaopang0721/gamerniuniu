@@ -77,7 +77,7 @@ module gamerniuniu.page {
 
 		public close(): void {
 			this._viewUI.btn_create_room.off(LEvent.CLICK, this, this.onBtnClickWithTween);
-
+			this._game.sceneObjectMgr.leaveStory(true);
 			super.close();
 		}
 	}
