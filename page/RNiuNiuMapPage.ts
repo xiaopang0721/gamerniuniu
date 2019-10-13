@@ -400,8 +400,10 @@ module gamerniuniu.page {
                 this._viewUI.view0.view_icon.img_icon.skin = TongyongUtil.getHeadUrl(mPlayerInfo.headimg, 2);
                 this._viewUI.view0.view_icon.img_qifu.visible = TongyongUtil.getIsHaveQiFu(mPlayer, this._game.sync.serverTimeBys);
                 //头像框
-                this._viewUI.view0.view_icon.img_txk.skin = TongyongUtil.getTouXiangKuangUrl(mPlayerInfo.headKuang, 2);
+                this._viewUI.view0.view_icon.img_txk.skin = TongyongUtil.getTouXiangKuangUrl(mPlayerInfo.headKuang);
                 this._viewUI.view0.view_icon.txt_money.text = EnumToString.getPointBackNum(mPlayerInfo.money, 2).toString();
+                this._viewUI.view0.view_icon.img_vip.visible = mPlayer.playerInfo.vip_level > 0;
+                this._viewUI.view0.view_icon.img_vip.skin = TongyongUtil.getVipUrl(mPlayer.playerInfo.vip_level);
             }
         }
 
@@ -441,8 +443,10 @@ module gamerniuniu.page {
                         }
                     }
                     //头像框
-                    this._playerList[index].view_icon.img_txk.skin = TongyongUtil.getTouXiangKuangUrl(unit.GetHeadKuangImg(), 2);
-
+                    this._playerList[index].view_icon.img_txk.skin = TongyongUtil.getTouXiangKuangUrl(unit.GetHeadKuangImg());
+                    //vip
+                    this._playerList[index].view_icon.img_vip.visible = unit.GetVipLevel() > 0;
+                    this._playerList[index].view_icon.img_vip.skin = TongyongUtil.getVipUrl(unit.GetVipLevel());
                     //祈福成功 头像上就有动画
                     if (qifu_index && posIdx == qifu_index) {
                         this._playerList[index].view_icon.qifu_type.visible = true;
