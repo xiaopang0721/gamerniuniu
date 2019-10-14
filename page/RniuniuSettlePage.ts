@@ -35,6 +35,7 @@ module gamerniuniu.page {
 			this._viewUI.list_settle.dataSource = this.dataSource[3];
 			this._endTime = this.dataSource[2];
 			this._viewUI.box_end.visible = this.dataSource[0] == this.dataSource[1];
+			this._viewUI.btn_back.visible = this.dataSource[0] == this.dataSource[1];
 			this._viewUI.box_xinxi.visible = !this._viewUI.box_end.visible;
 			this._viewUI.txt_jushu.text = this.dataSource[0] + "/" + this.dataSource[1]
 			this._viewUI.txt_total.text = this.dataSource[1].toString();
@@ -48,6 +49,9 @@ module gamerniuniu.page {
 					this._game.uiRoot.general.open(DatingPageDef.PAGE_CREATE_CARD_ROOM, (page: gamedating.page.CreateCardRoomBase) => {
 						page.game_id = RniuniuPageDef.GAME_NAME;
 					});
+					this.close();
+				case this._viewUI.btn_back:
+					this._game.sceneObjectMgr.leaveStory(true);
 					this.close();
 					break;
 			}
@@ -77,7 +81,6 @@ module gamerniuniu.page {
 
 		public close(): void {
 			this._viewUI.btn_create_room.off(LEvent.CLICK, this, this.onBtnClickWithTween);
-			this._game.sceneObjectMgr.leaveStory(true);
 			super.close();
 		}
 	}
