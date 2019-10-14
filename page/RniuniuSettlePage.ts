@@ -52,6 +52,7 @@ module gamerniuniu.page {
 						page.game_id = RniuniuPageDef.GAME_NAME;
 					});
 					this.close();
+					break;
 				case this._viewUI.btn_back:
 					this._game.sceneObjectMgr.leaveStory(true);
 					this.close();
