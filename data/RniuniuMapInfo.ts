@@ -13,6 +13,8 @@ module gamerniuniu.data {
 		static EVENT_GAME_NO: string = "RniuniuMapInfo.EVENT_GAME_NO";
 		//倒计时时间戳更新
 		static EVENT_COUNT_DOWN: string = "RniuniuMapInfo.EVENT_COUNT_DOWN";
+		//投票倒计时
+		static EVENT_TOUPIAO_TIME: string = "TouPiaoMgr.EVENT_TOUPIAO_TIME";
 
 		constructor(v: SceneObjectMgr) {
 			super(v, () => { return new RniuniuData() });
@@ -40,7 +42,7 @@ module gamerniuniu.data {
 				this._sceneObjectMgr.event(RniuniuMapInfo.EVENT_GAME_NO);
 			}
 			if (isNew || mask.GetBit(MapField.MAP_INT_TOU_PIAO_TIME)) {
-				this._sceneObjectMgr.event("TouPiaoMgr.EVENT_TOUPIAO_TIME");
+				this._sceneObjectMgr.event(RniuniuMapInfo.EVENT_TOUPIAO_TIME);
 			}
 		}
 		//牌型
