@@ -580,6 +580,7 @@ module gamerniuniu.page {
         private _curIndex: number = 0;
         private ranEffPos(): void {
             if (!this._game.mainScene || !this._game.mainScene.camera) return;
+            if (!this._bankerList.length) return;
             if (this._curIndex >= this._bankerList.length) {
                 this._curIndex = 0;
             }
