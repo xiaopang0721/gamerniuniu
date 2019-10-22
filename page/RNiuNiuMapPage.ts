@@ -362,11 +362,13 @@ module gamerniuniu.page {
         private onWashCardOver(): void {
             if (!this._isPlayXiPai) return;
             Laya.Tween.to(this._viewUI.xipai, { x: 1007, y: 165, alpha: 0, rotation: -30, scaleX: 0.35, scaleY: 0.35 }, 500);
-            Laya.timer.once(500, this, () => {
-                this._viewUI.paixie.cards.visible = true;
-                this._viewUI.paixie.ani_chupai.play(0, false);
-                this._isPlayXiPai = false;
-            })
+            if (!this._niuStory.isReConnected) {
+                Laya.timer.once(500, this, () => {
+                    this._viewUI.paixie.cards.visible = true;
+                    this._viewUI.paixie.ani_chupai.play(0, false);
+                    this._isPlayXiPai = false;
+                })
+            }
         }
 
         private onUpdateMapInfo(): void {
@@ -460,7 +462,7 @@ module gamerniuniu.page {
                                 this._playerList[index].view_icon.img_qifu.visible = true;
                                 this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);
                             })
-                        } 
+                        }
                         // else {
                         //     this._playerList[index].view_icon.img_qifu.visible = true;
                         //     this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);
