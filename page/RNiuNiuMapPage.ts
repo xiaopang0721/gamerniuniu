@@ -388,6 +388,7 @@ module gamerniuniu.page {
                     this._niuStory.mapLv = mapinfo.GetMapLevel();
                     this._isGameEnd = false;
                     this.onUpdateGameRound();
+                    this._toupiaoMgr.offLineReLogin();
                 }
             }
         }
