@@ -104,9 +104,9 @@ module gamerniuniu.data {
 			this.pos.y = posY;
 			this.targe_pos.x = posX + this.index * space;
 			this.targe_pos.y = posY;
-		this.scaleX = -1;
+			this.scaleX = -1;
 			this.rotateAngle = Math.PI * 4;
-			super.fapai();
+			super.movePai();
 		}
 
 		yipai() {
@@ -137,7 +137,7 @@ module gamerniuniu.data {
 
 		moveCard() {
 			this.isFinalPos = false;
-			super.fapai();
+			super.movePai();
 		}
 	}
 }
