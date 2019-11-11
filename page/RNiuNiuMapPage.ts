@@ -388,6 +388,7 @@ module gamerniuniu.page {
                     this._niuStory.mapLv = mapinfo.GetMapLevel();
                     this._isGameEnd = false;
                     this.onUpdateGameRound();
+                    this._toupiaoMgr.offLineReLogin();
                 }
             }
         }
@@ -463,10 +464,10 @@ module gamerniuniu.page {
                                 this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);
                             })
                         }
-                        // else {
-                        //     this._playerList[index].view_icon.img_qifu.visible = true;
-                        //     this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);
-                        // }
+                        else {
+                            this._playerList[index].view_icon.img_qifu.visible = true;
+                            this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);
+                        }
                     } else {
                         this._playerList[index].view_icon.img_qifu.visible = false;
                         this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);
