@@ -102,6 +102,9 @@ module gamerniuniu.page {
         // 页面打开时执行函数
         protected onOpen(): void {
             super.onOpen();
+             //api充值不显示
+            this._viewUI.btn_chongzhi.visible = !WebConfig.enterGameLocked;
+            
             this.initBeiClip();
             //是否断线重连
             this.onUpdateMapInfo()
@@ -388,6 +391,7 @@ module gamerniuniu.page {
                     this._niuStory.mapLv = mapinfo.GetMapLevel();
                     this._isGameEnd = false;
                     this.onUpdateGameRound();
+                    this._toupiaoMgr.offLineReLogin();
                 }
             }
         }
@@ -463,10 +467,10 @@ module gamerniuniu.page {
                                 this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);
                             })
                         }
-                        // else {
-                        //     this._playerList[index].view_icon.img_qifu.visible = true;
-                        //     this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);
-                        // }
+                        else {
+                            this._playerList[index].view_icon.img_qifu.visible = true;
+                            this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);
+                        }
                     } else {
                         this._playerList[index].view_icon.img_qifu.visible = false;
                         this._playerList[index].view_icon.img_icon.skin = TongyongUtil.getHeadUrl(unit.GetHeadImg(), 2);

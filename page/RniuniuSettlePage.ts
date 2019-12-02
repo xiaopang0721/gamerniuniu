@@ -29,7 +29,7 @@ module gamerniuniu.page {
 			super.onOpen();
 			this._viewUI.list_settle.vScrollBarSkin = "";
 			this._viewUI.list_settle.scrollBar.elasticDistance = 100;
-			this._viewUI.list_settle.itemRender = this.createChildren("game_ui.niuniu.component.JieSuanCardRenderUI", ListRecordItem);
+			this._viewUI.list_settle.itemRender = this.createChildren("game_ui.rniuniu.component.JieSuanCardRenderUI", ListRecordItem);
 			this._viewUI.list_settle.renderHandler = new Handler(this, this.renderHandler);
 
 			this._viewUI.list_settle.dataSource = this.dataSource[3];
