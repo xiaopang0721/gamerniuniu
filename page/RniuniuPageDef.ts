@@ -36,13 +36,9 @@ module gamerniuniu.page {
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/fapai_1.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "general/effect/xipai.atlas",
 				Path_game_rniuniu.ui_niuniu + "sk/qznn_0.png",
-				Path_game_rniuniu.ui_niuniu + "sk/qznn_0.sk",
 				Path_game_rniuniu.ui_niuniu + "sk/qznn_1.png",
-				Path_game_rniuniu.ui_niuniu + "sk/qznn_1.sk",
 				Path_game_rniuniu.ui_niuniu + "sk/qznn_2.png",
-				Path_game_rniuniu.ui_niuniu + "sk/qznn_2.sk",
 				Path_game_rniuniu.ui_niuniu + "sk/qznn_3.png",
-				Path_game_rniuniu.ui_niuniu + "sk/qznn_3.sk",
 
 				PathGameTongyong.atlas_game_ui_tongyong + "jiaru.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "dating.atlas",
