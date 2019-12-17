@@ -3,7 +3,7 @@
 */
 module gamerniuniu.page {
 	export class RniuniuSettlePage extends game.gui.base.Page {
-		private _viewUI: ui.nqp.game_ui.rniuniu.JieSuanUI;
+		private _viewUI: ui.ajqp.game_ui.rniuniu.JieSuanUI;
 		private _niuMgr: RniuniuMgr;
 		private _niuStory: RniuniuStory;
 
@@ -13,6 +13,7 @@ module gamerniuniu.page {
 			this._isClickBlack = false;
 			this._asset = [
 				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "js.atlas",
 			];
 		}
 
@@ -89,7 +90,7 @@ module gamerniuniu.page {
 		}
 	}
 
-	class ListRecordItem extends ui.nqp.game_ui.rniuniu.component.JieSuanCardRenderUI {
+	class ListRecordItem extends ui.ajqp.game_ui.rniuniu.component.JieSuanCardRenderUI {
 		private _game: Game;
 		private _data: any;
 		setData(game: Game, data: any) {
