@@ -95,7 +95,6 @@ module gamerniuniu.page {
                 this._niuMgr.on(RniuniuMgr.DEAL_OVER, this, this.onUpdateAniDeal);
             }
             this._game.playMusic(Path_game_rniuniu.music_rniuniu + "nn_bgm.mp3");
-            this._viewUI.box_left.left = this._game.isFullScreen ? 30 : 10;
         }
 
         // 页面打开时执行函数
@@ -151,6 +150,24 @@ module gamerniuniu.page {
 
             this._game.network.addHanlder(Protocols.SMSG_OPERATION_FAILED, this, this.onOptHandler);
             this._game.mainScene && this._game.mainScene.on(SceneOperator.AVATAR_MOUSE_CLICK_HIT, this, this.onUpdatePoint);
+        }
+
+        protected layout(): void {
+            super.layout();
+            if (this._viewUI) {
+                //全面屏
+                if (this._game.isFullScreen) {
+                    this._viewUI.box_top_left.left = 14 + 56;
+                    this._viewUI.box_room_left.left = 105 + 56;
+                    this._viewUI.box_top_right.right = 28 + 56;
+                    this._viewUI.box_bottom_right.right = 12 + 56;
+                } else {
+                    this._viewUI.box_top_left.left = 14;
+                    this._viewUI.box_room_left.left = 105;
+                    this._viewUI.box_top_right.right = 28;
+                    this._viewUI.box_bottom_right.right = 12;
+                }
+            }
         }
 
         private _curDiffTime: number;
@@ -962,12 +979,12 @@ module gamerniuniu.page {
             let type: number = 0;//默认没牛
             if (cardType == 0) {//没牛
                 isplay && view.ani0.play(0, false);
-            } else if (cardType > 0 && cardType < 8) {//牛一到牛七
+            } else if (cardType > 0 && cardType < 7) {//牛一到牛六
                 type = 1;
                 view.type1.skin = StringU.substitute(Path_game_rniuniu.ui_rniuniu + "n_{0}.png", cardType);
                 view.rate1.skin = StringU.substitute(Path_game_rniuniu.ui_rniuniu + "sz_{0}.png", this._niuMgr.checkCardsRate(cardType));
                 isplay && view.ani1.play(0, false);
-            } else if (cardType >= 8 && cardType < 10) {//牛八，牛九
+            } else if (cardType >= 7 && cardType < 10) {//牛七，牛八，牛九
                 type = 2;
                 view.type2_1.skin = StringU.substitute(Path_game_rniuniu.ui_rniuniu + "n_{0}.png", cardType);
                 view.type2_2.skin = StringU.substitute(Path_game_rniuniu.ui_rniuniu + "n_{0}.png", cardType);
@@ -1111,7 +1128,7 @@ module gamerniuniu.page {
             this._viewUI.btn_dismiss.skin = this._isPlaying || this._niuStory.isCardRoomMaster() ? PathGameTongyong.ui_tongyong_general + "btn_js.png" : PathGameTongyong.ui_tongyong_general + "btn_fh1.png";
             this._viewUI.btn_dismiss.tag = this._isPlaying || this._niuStory.isCardRoomMaster() ? 2 : 1;
             if (this._isPlaying) {
-                this._viewUI.box_id.visible = false;
+                this._viewUI.box_room_left.visible = false;
             }
             //游戏开始后初始化投票组件
             if (!this._toupiaoMgr && this._curStatus > MAP_STATUS.PLAY_STATUS_CARDROOM_WAIT) {
@@ -1483,7 +1500,7 @@ module gamerniuniu.page {
         private onUpdateGameNo(): void {
             if (!this._niuMapInfo) return;
             if (this._niuMapInfo.GetGameNo()) {
-                this._viewUI.box_id.visible = true;
+                this._viewUI.box_room_left.visible = true;
                 this._viewUI.txt_id.text = "牌局号：" + this._niuMapInfo.GetGameNo();
             }
         }
@@ -1533,7 +1550,7 @@ module gamerniuniu.page {
             this._viewUI.box_betRate.visible = false;
             this._viewUI.box_timer.visible = false;
             this._viewUI.box_xinshou.visible = false;
-            this._viewUI.box_id.visible = false;
+            this._viewUI.box_room_left.visible = false;
             this._viewUI.xipai.visible = false;
             this._viewUI.paixie.ani2.gotoAndStop(0);
             this._viewUI.paixie.cards.visible = false;
