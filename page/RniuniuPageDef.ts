@@ -6,9 +6,9 @@ module gamerniuniu.page {
 		static GAME_NAME: string;
 		//牛牛地图UI
 		static PAGE_RNIUNIU_MAP: string = "2";
+		// 房卡结算页
+		static PAGE_RNIUNIU_CARDROOM_SETTLE: string = "3";
 
-		//房卡系列
-		static PAGE_RNIUNIU_CARDROOM_SETTLE: string = "3";	// 房卡结算页
 		//牛牛游戏规则界面
 		static PAGE_RNIUNIU_RULE: string = "101";
 
@@ -22,22 +22,22 @@ module gamerniuniu.page {
 
 			this["__needLoadAsset"] = [
 				DatingPath.atlas_dating_ui + "qifu.atlas",
-                Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
-                Path_game_rniuniu.atlas_game_ui + "rniuniu/qp.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "qifu.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "hud.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "pai.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "touxiang.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "dating.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "qz.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "fk.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "chongzhi.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong + "nyl.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong_general + "effect/suiji.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong_general + "effect/fapai_1.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong_general + "effect/xipai.atlas",
-                PathGameTongyong.atlas_game_ui_tongyong_general + "anniu.atlas",
+				Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
+				Path_game_rniuniu.atlas_game_ui + "rniuniu/qp.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "qifu.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "hud.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "pai.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "touxiang.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "dating.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "qz.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "fk.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "chongzhi.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong + "nyl.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong_general + "effect/suiji.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong_general + "effect/fapai_1.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong_general + "effect/xipai.atlas",
+				PathGameTongyong.atlas_game_ui_tongyong_general + "anniu.atlas",
 
 				Path.custom_atlas_scene + 'card.atlas',
 				Path.map + 'pz_rniuniu.png',
