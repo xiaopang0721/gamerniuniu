@@ -46,8 +46,8 @@ module gamerniuniu {
             this.BEI_FONT = {
                 source: PathGameTongyong.atlas_game_ui_tongyong + "general.atlas",
                 url: PathGameTongyong.ui_tongyong_general + 'clip_bs.png',
-                clipWidth: 20,
-                clipHeight: 28,
+                clipWidth: 16,
+                clipHeight: 22,
                 clipX: 11,
                 space: 0
             };

@@ -84,8 +84,10 @@ module gamerniuniu.page {
 		}
 
 		public close(): void {
-			this._viewUI.btn_create_room.off(LEvent.CLICK, this, this.onBtnClickWithTween);
-			this._viewUI.btn_back.off(LEvent.CLICK, this, this.onBtnClickWithTween);
+			if (this._viewUI){
+				this._viewUI.btn_create_room.off(LEvent.CLICK, this, this.onBtnClickWithTween);
+				this._viewUI.btn_back.off(LEvent.CLICK, this, this.onBtnClickWithTween);
+			}
 			super.close();
 		}
 	}

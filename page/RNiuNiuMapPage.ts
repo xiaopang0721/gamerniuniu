@@ -184,17 +184,25 @@ module gamerniuniu.page {
         }
 
         //倍数
-        private _beiClip1: ClipUtil;
-        private _beiClip2: ClipUtil;
-        private _beiClip3: ClipUtil;
-        private _beiClip4: ClipUtil;
+        private _beiClip1: RniuniuClip;
+        private _beiClip2: RniuniuClip;
+        private _beiClip3: RniuniuClip;
+        private _beiClip4: RniuniuClip;
         initBeiClip(): void {
             for (let i = 1; i < 5; i++) {
-                this["_beiClip" + i] = new ClipUtil(ClipUtil.BEI_FONT);
+                this["_beiClip" + i] = new RniuniuClip(RniuniuClip.BEI_FONT);
                 this["_beiClip" + i].centerX = this._viewUI["clip_betRate" + i].centerX;
                 this["_beiClip" + i].centerY = this._viewUI["clip_betRate" + i].centerY;
                 this._viewUI["clip_betRate" + i].parent.addChild(this["_beiClip" + i]);
                 this._viewUI["clip_betRate" + i].visible = false;
+            }
+            for (let i = 1; i < 4; i++) {
+                this["_bankerClip" + i] = new RniuniuClip(RniuniuClip.BEI_FONT);
+                this["_bankerClip" + i].centerX = this._viewUI["clip_bankerRate" + i].centerX;
+                this["_bankerClip" + i].centerY = this._viewUI["clip_bankerRate" + i].centerY;
+                this._viewUI["clip_bankerRate" + i].parent.addChild(this["_bankerClip" + i]);
+                this._viewUI["clip_bankerRate" + i].visible = false;
+                this["_bankerClip" + i].setText(i, true, false, "", PathGameTongyong.ui_tongyong_general + "tu_bei.png");
             }
         }
 
@@ -206,6 +214,13 @@ module gamerniuniu.page {
                     this["_beiClip" + i] = null;
                 }
             }
+            for (let i = 1; i < 4; i++) {
+                if (this["_bankerClip" + i]) {
+                    this["_bankerClip" + i].removeSelf();
+                    this["_bankerClip" + i].destroy();
+                    this["_bankerClip" + i] = null;
+                }
+            }
         }
 
         //帧间隔心跳
@@ -213,6 +228,7 @@ module gamerniuniu.page {
             if (!(this._niuMapInfo instanceof RniuniuMapInfo)) return;
             if (!this._viewUI) return;
             if (this._noTimer.indexOf(this._curStatus) != -1) {
+                this._viewUI.box_timer.visible = false;
                 return;
             }
             let curTime = this._game.sync.serverTimeBys;
@@ -851,7 +867,7 @@ module gamerniuniu.page {
                     box_rate.box_bet.visible = false;
                     box_rate.box_qiang.visible = true;
                     box_rate.box_buqiang.visible = !box_rate.box_qiang.visible;
-                    box_rate.img_rate.skin = StringU.substitute(Path_game_niuniu.ui_niuniu + "qp/bei_{0}.png", this._bankerRateList[index]);
+                    box_rate.img_rate.skin = StringU.substitute(Path_game_rniuniu.ui_rniuniu + "qp/bei_{0}.png", this._bankerRateList[index]);
                     box_rate.ani1.gotoAndStop(27);
                 }
             } else {
@@ -859,7 +875,7 @@ module gamerniuniu.page {
                 box_rate.box_bet.visible = false;
                 box_rate.box_qiang.visible = info.BetVal > 0;
                 box_rate.box_buqiang.visible = !box_rate.box_qiang.visible;
-                box_rate.img_rate.skin = StringU.substitute(Path_game_niuniu.ui_niuniu + "qp/bei_{0}.png", info.BetVal);
+                box_rate.img_rate.skin = StringU.substitute(Path_game_rniuniu.ui_rniuniu + "qp/bei_{0}.png", info.BetVal);
                 box_rate.ani1.play(0, false);
             }
         }
@@ -870,12 +886,13 @@ module gamerniuniu.page {
             this._playerList[index].box_rate.box_bet.visible = true;
             this._playerList[index].box_rate.box_buqiang.visible = false;
             this._playerList[index].box_rate.box_qiang.visible = false;
-            this._playerList[index].box_rate.img_betRate.skin = StringU.substitute(Path_game_niuniu.ui_niuniu + "qp/bei_{0}.png", info.BetVal);
+            this._playerList[index].box_rate.img_betRate.skin = StringU.substitute(Path_game_rniuniu.ui_rniuniu + "qp/bei_{0}.png", info.BetVal);
             if (this._curStatus == MAP_STATUS.PLAY_STATUS_BET) {
                 this._playerList[index].box_rate.ani1.play(0, false);
             } else {
                 this._playerList[index].box_rate.ani1.gotoAndStop(27);
             }
+            this._betTemps[info.SeatIndex - 1] = info.BetVal;
         }
 
         private onBattlePinPai(info: any, status: number): void {
@@ -1071,7 +1088,7 @@ module gamerniuniu.page {
             playerIcon.img_di.visible = false;
             //飘字
             clip_money.setText(Math.abs(value), true, false, preSkin);
-            clip_money.centerX = playerIcon.clip_money.centerX;
+            clip_money.centerX = playerIcon.clip_money.centerX - 4;
             clip_money.centerY = playerIcon.clip_money.centerY;
             playerIcon.clip_money.parent.addChild(clip_money);
             this._clipList.push(clip_money);
@@ -1080,7 +1097,7 @@ module gamerniuniu.page {
             playerIcon.box_clip.y = 57;
             playerIcon.box_clip.visible = true;
             Laya.Tween.clearAll(playerIcon.box_clip);
-            Laya.Tween.to(playerIcon.box_clip, { y: playerIcon.box_clip.y - 50 }, 1000);
+            Laya.Tween.to(playerIcon.box_clip, { y: playerIcon.box_clip.y - 55 }, 700);
             //赢钱动画
             playerIcon.effWin.visible = value > 0;
             value > 0 && playerIcon.effWin.ani1.play(0, false);
@@ -1218,8 +1235,8 @@ module gamerniuniu.page {
                     break;
                 case MAP_STATUS.PLAY_STATUS_SETTLE:// 结算阶段
                     this._viewUI.box_tips.visible = false;
-                    let isTongSha = this._bankerWinInfo.length == 2;
-                    let isTongPei = this._bankerLoseInfo.length == 2;
+                    let isTongPei = this._bankerWinInfo.length == 2;
+                    let isTongSha = this._bankerLoseInfo.length == 2;
                     let time_delay = isTongPei || isTongSha ? 1000 : 0;//飘筹码延迟
                     let fly_delay = isTongSha || isTongPei ? 2500 : 1500;//飘字延迟
                     if (isTongSha) {//庄家通杀
