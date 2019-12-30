@@ -105,8 +105,8 @@ module gamerniuniu.page {
 
             this.initBeiClip();
             //是否断线重连
-            this.onUpdateMapInfo()
             this.onUpdateUnitOffline();//初始化假的主玩家
+            this.onUpdateMapInfo()
 
             //所有监听
             this._viewUI.btn_spread.on(LEvent.CLICK, this, this.onBtnClickWithTween);
@@ -158,12 +158,12 @@ module gamerniuniu.page {
                 //全面屏
                 if (this._game.isFullScreen) {
                     this._viewUI.box_top_left.left = 14 + 56;
-                    this._viewUI.box_room_left.left = 105 + 56;
+                    this._viewUI.box_room_left.left = 115 + 56;
                     this._viewUI.box_top_right.right = 28 + 56;
                     this._viewUI.box_bottom_right.right = 12 + 56;
                 } else {
                     this._viewUI.box_top_left.left = 14;
-                    this._viewUI.box_room_left.left = 105;
+                    this._viewUI.box_room_left.left = 115;
                     this._viewUI.box_top_right.right = 28;
                     this._viewUI.box_bottom_right.right = 12;
                 }
@@ -440,7 +440,7 @@ module gamerniuniu.page {
                 this._viewUI.view0.view_icon.img_qifu.visible = TongyongUtil.getIsHaveQiFu(mPlayer, this._game.sync.serverTimeBys);
                 //头像框
                 this._viewUI.view0.view_icon.img_txk.skin = TongyongUtil.getTouXiangKuangUrl(mPlayerInfo.headKuang);
-                this._viewUI.view0.view_icon.txt_money.text = EnumToString.getPointBackNum(mPlayerInfo.money, 2).toString();
+                this._viewUI.view0.view_icon.txt_money.text = "0";
                 this._viewUI.view0.view_icon.img_vip.visible = mPlayer.playerInfo.vip_level > 0;
                 this._viewUI.view0.view_icon.img_vip.skin = TongyongUtil.getVipUrl(mPlayer.playerInfo.vip_level);
             }
