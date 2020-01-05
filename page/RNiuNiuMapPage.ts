@@ -61,7 +61,6 @@ module gamerniuniu.page {
             this._isNeedDuang = false;
             this._delta = 1000;
             this._asset = [
-                DatingPath.atlas_dating_ui + "qifu.atlas",
                 Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
                 Path_game_rniuniu.atlas_game_ui + "rniuniu/qp.atlas",
                 PathGameTongyong.atlas_game_ui_tongyong + "qifu.atlas",

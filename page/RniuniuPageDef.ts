@@ -21,7 +21,6 @@ module gamerniuniu.page {
 
 
 			this["__needLoadAsset"] = [
-				DatingPath.atlas_dating_ui + "qifu.atlas",
 				Path_game_rniuniu.atlas_game_ui + "rniuniu.atlas",
 				Path_game_rniuniu.atlas_game_ui + "rniuniu/qp.atlas",
 				PathGameTongyong.atlas_game_ui_tongyong + "qifu.atlas",
